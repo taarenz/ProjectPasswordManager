@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="552.0" maxWidth="390.0" prefHeight="341.0" prefWidth="390.0" styleClass="background-login" stylesheets="@../../css/style-login.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.application.controller.LoginController">
+<AnchorPane maxHeight="552.0" maxWidth="390.0" prefHeight="341.0" prefWidth="390.0" styleClass="background-login" stylesheets="@../../css/style-login.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.application.controller.LoginController">
    <children>
       <Button fx:id="loginButton" layoutX="143.0" layoutY="225.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="46.0" prefWidth="104.0" styleClass="bottone-login" stylesheets="@../../css/style-login.css" text="LOGIN" textFill="WHITE">
          <font>
@@ -20,7 +20,7 @@
          </font>
       </Label>
       <TextField fx:id="textFieldNomeUtente" alignment="CENTER" layoutX="80.0" layoutY="116.0" promptText="nome utente" styleClass="text-field-utente" stylesheets="@../../css/style-login.css" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" />
-      <PasswordField fx:id="textFieldPassword" alignment="CENTER" layoutX="121.0" layoutY="171.0" promptText="password" styleClass="text-field-password" stylesheets="@../../css/style-login.css" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" />
       <Button layoutX="152.0" layoutY="277.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" styleClass="button-registrati" stylesheets="@../../css/style-login.css" text="REGISTRATI" />
+      <PasswordField alignment="CENTER" layoutX="121.0" layoutY="171.0" promptText="password" styleClass="text-field-password" stylesheets="@../../css/style-login.css" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" />
    </children>
 </AnchorPane>
