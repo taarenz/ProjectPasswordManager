@@ -21,6 +21,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // caricamento password
         try {
             FileInputStream fis = new FileInputStream("src/main/resources/txtFile/utente_criptato.txt");
             ObjectInputStream os = new ObjectInputStream(fis);
