@@ -1,0 +1,85 @@
+.background-main {
+    -fx-background-color: linear-gradient(to bottom left, #cedbe3 .05%,#00B6F5 70%, #006fff 100% );
+}
+
+.title {
+    -fx-font-size: 27px;
+    -fx-font-weight: bold;
+
+    -fx-border-color: white;
+    -fx-border-width: 0px 0px 2px 0px;
+}
+
+.background-side-menu {
+    -fx-background-color: linear-gradient(to bottom,  #00B6F5 .05%, #006fff 100% );
+    -fx-border-width: 0px 2px 0px 0px;
+    -fx-border-color: white;
+}
+
+.button-side-menu {
+    -fx-border-color: white;
+    -fx-border-width: 0px 0px 2px 0px;
+
+    -fx-background-color: transparent;
+
+    -fx-font-size: 106%;
+
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.button-side-menu:hover {
+    -fx-border-color: white;
+    -fx-border-width: 0px 0px 2px 0px;
+
+    -fx-background-color: linear-gradient(to bottom, #0059ff .05%, #006fff 100% );
+
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-size: 111%;
+}
+
+.button-side-menu:pressed {
+    -fx-border-color: white;
+    -fx-border-width: 0px 0px 2px 0px;
+
+    -fx-background-color: linear-gradient(to bottom, #e6edff .05%, #ffffff 100% );
+
+    -fx-font-weight: bold;
+    -fx-text-fill: #0059ff;
+    -fx-font-size: 111%;
+}
+
+.button-log-out {
+    -fx-border-color: white;
+    -fx-border-width: 2px 0px 2px 0px;
+
+    -fx-background-color: transparent;
+
+    -fx-font-size: 106%;
+
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.button-log-out:hover{
+    -fx-border-color: white;
+    -fx-border-width: 2px 0px 2px 0px;
+
+    -fx-background-color: linear-gradient(to bottom, #ff0000 .05%, #ff0f0f 100% );
+
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-size: 111%;
+}
+
+.button-log-out:pressed {
+    -fx-border-color: white;
+    -fx-border-width: 0px 0px 2px 0px;
+
+    -fx-background-color: linear-gradient(to bottom, #e6edff .05%, #ffffff 100% );
+
+    -fx-font-weight: bold;
+    -fx-text-fill: #ff0000;
+    -fx-font-size: 111%;
+}

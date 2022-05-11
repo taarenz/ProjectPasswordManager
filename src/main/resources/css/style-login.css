@@ -45,6 +45,7 @@
     -fx-prompt-text-fill: white;
 
     -fx-text-fill: white;
+    -fx-font-size: 14px;
 }
 
 .text-field-password {
@@ -58,6 +59,7 @@
     -fx-prompt-text-fill: white;
 
     -fx-text-fill: white;
+    -fx-font-size: 14px;
 }
 
 .button-registrati {
