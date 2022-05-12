@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainApp extends Application {
+
+    public static int loggedUser=0;
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("login-view.fxml"));
@@ -21,4 +23,12 @@ public class MainApp extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+//    public int getLoggedUser(){
+//        return loggedUser;
+//    }
+//
+//    public void setLoggedUser(int loggedUser){
+//        this.loggedUser = loggedUser;
+//    }
 }
