@@ -27,7 +27,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="bottoneSwitchVisualizzaPassword" mnemonicParsing="false" prefHeight="69.0" prefWidth="188.0" styleClass="button-side-menu" text="VISUALIZZA PASSWORD">
+            <Button fx:id="bottoneSwitchVisualizzaPassword" mnemonicParsing="false" onAction="#scenaVisualizzaPassword" prefHeight="69.0" prefWidth="188.0" styleClass="button-side-menu" text="VISUALIZZA PASSWORD">
                <font>
                   <Font size="13.0" />
                </font>
