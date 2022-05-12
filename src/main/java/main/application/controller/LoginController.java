@@ -9,10 +9,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import main.application.MainApp;
+import main.application.database.DBHandler;
 import main.application.model.Utente;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -46,9 +53,33 @@ public class LoginController implements Initializable {
             System.out.println("ERRORE FILE");
         }
 
+
     }
 
     public void loginAction(ActionEvent event) throws Exception{
+
+
+        Connection connection = DBHandler.getConnection();
+//        System.out.print(connection);
+
+        try {
+
+            String query = "SELECT * FROM users WHERE username = ?";
+            PreparedStatement s = connection.prepareStatement(query);
+            s.setString(1, textFieldNomeUtente.getText());
+
+            ResultSet rs = s.executeQuery();
+            while (rs.next()){
+                //TODO: check password hash
+                System.out.println(rs.getString("username"));
+                MainApp.loggedUser = rs.getInt("id");
+            }
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         if(utenteSalvato.equals(new Utente(textFieldNomeUtente.getText(),textFieldPassword.getText()))){
             // caricamento della nuova scena
             root = FXMLLoader.load(getClass().getResource("/main/application/main-view.fxml"));
@@ -73,4 +104,45 @@ public class LoginController implements Initializable {
     }
 
 
+    //Hashing functions (?)
+    public static byte[] getSHA(String input) throws NoSuchAlgorithmException
+    {
+        /* MessageDigest instance for hashing using SHA256 */
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+        /* digest() method called to calculate message digest of an input and return array of byte */
+        return md.digest(input.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public static String toHexString(byte[] hash)
+    {
+        /* Convert byte array of hash into digest */
+        BigInteger number = new BigInteger(1, hash);
+
+        /* Convert the digest into hex value */
+        StringBuilder hexString = new StringBuilder(number.toString(16));
+
+        /* Pad with leading zeros */
+        while (hexString.length() < 32)
+        {
+            hexString.insert(0, '0');
+        }
+
+        return hexString.toString();
+    }
+
 }
+
+// try
+//         {
+//         String string1 = "myPassword";
+//         System.out.println("\n" + string1 + " : " + toHexString(getSHA(string1)));
+//
+//         String string2 = "hashtrial";
+//         System.out.println("\n" + string2 + " : " + toHexString(getSHA(string2)));
+//         }
+//         catch (NoSuchAlgorithmException e)
+//         {
+//         System.out.println("Exception thrown for incorrect algorithm: " + e);
+//         }
+//         }
