@@ -52,7 +52,7 @@
 
 .button-log-out {
     -fx-border-color: white;
-    -fx-border-width: 2px 0px 2px 0px;
+    -fx-border-width: 2px 0px 0px 0px;
 
     -fx-background-color: transparent;
 
@@ -64,7 +64,7 @@
 
 .button-log-out:hover{
     -fx-border-color: white;
-    -fx-border-width: 2px 0px 2px 0px;
+    -fx-border-width: 2px 0px 0px 0px;
 
     -fx-background-color: linear-gradient(to bottom, #ff0000 .05%, #ff0f0f 100% );
 
@@ -75,7 +75,7 @@
 
 .button-log-out:pressed {
     -fx-border-color: white;
-    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-width: 2px 0px 0px 0px;
 
     -fx-background-color: linear-gradient(to bottom, #e6edff .05%, #ffffff 100% );
 

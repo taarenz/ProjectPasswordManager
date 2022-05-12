@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="896.0" styleClass="background-main" stylesheets="@../../css/style-main-view.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="896.0" styleClass="background-main" stylesheets="@../../css/style-main-view.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.application.controller.MainAppController">
    <left>
       <VBox prefHeight="552.0" prefWidth="177.0" styleClass="background-side-menu" stylesheets="@../../css/style-main-view.css" BorderPane.alignment="CENTER">
          <children>
@@ -18,27 +17,27 @@
                   <Font name="System Bold" size="27.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" prefHeight="69.0" prefWidth="177.0" styleClass="button-side-menu" stylesheets="@../../css/style-main-view.css" text="NUOVA PASSWORD">
+            <Button fx:id="bottoneSwitchNuovaPassword" mnemonicParsing="false" onAction="#scenaModificaPassword" prefHeight="69.0" prefWidth="177.0" styleClass="button-side-menu" stylesheets="@../../css/style-main-view.css" text="NUOVA PASSWORD">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="69.0" prefWidth="177.0" styleClass="button-side-menu" text="MODIFICA PASSWORD">
+            <Button fx:id="bottoneSwitchModificaPassword" mnemonicParsing="false" onAction="#scenaModificaPassword" prefHeight="69.0" prefWidth="177.0" styleClass="button-side-menu" text="MODIFICA PASSWORD">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="69.0" prefWidth="188.0" styleClass="button-side-menu" text="VISUALIZZA PASSWORD">
+            <Button fx:id="bottoneSwitchVisualizzaPassword" mnemonicParsing="false" prefHeight="69.0" prefWidth="188.0" styleClass="button-side-menu" text="VISUALIZZA PASSWORD">
                <font>
                   <Font size="13.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="69.0" prefWidth="184.0" styleClass="button-side-menu" text="SECURITY CHECK">
+            <Button fx:id="bottoneSwitchSecurityCheck" mnemonicParsing="false" prefHeight="69.0" prefWidth="184.0" styleClass="button-side-menu" text="SECURITY CHECK">
                <font>
                   <Font size="17.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="69.0" prefWidth="186.0" styleClass="button-side-menu" text="ABOUT" />
+            <Button fx:id="bottoneSwitchAbout" mnemonicParsing="false" prefHeight="69.0" prefWidth="186.0" styleClass="button-side-menu" text="ABOUT" />
             <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="175.0" styleClass="button-log-out" text="LOGOUT">
                <VBox.margin>
                   <Insets top="124.0" />
@@ -48,6 +47,6 @@
       </VBox>
    </left>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background-main" BorderPane.alignment="CENTER" />
+      <AnchorPane fx:id="anchorPane" prefHeight="200.0" prefWidth="200.0" styleClass="background-main" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

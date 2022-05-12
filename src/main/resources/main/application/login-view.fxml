@@ -21,6 +21,6 @@
       </Label>
       <TextField fx:id="textFieldNomeUtente" alignment="CENTER" layoutX="80.0" layoutY="116.0" promptText="nome utente" styleClass="text-field-utente" stylesheets="@../../css/style-login.css" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" />
       <Button layoutX="152.0" layoutY="277.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" styleClass="button-registrati" stylesheets="@../../css/style-login.css" text="REGISTRATI" />
-      <PasswordField alignment="CENTER" layoutX="121.0" layoutY="171.0" promptText="password" styleClass="text-field-password" stylesheets="@../../css/style-login.css" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" />
+      <PasswordField fx:id="textFieldPassword" alignment="CENTER" layoutX="121.0" layoutY="171.0" promptText="password" styleClass="text-field-password" stylesheets="@../../css/style-login.css" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" />
    </children>
 </AnchorPane>
