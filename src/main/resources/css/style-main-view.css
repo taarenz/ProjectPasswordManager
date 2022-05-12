@@ -8,6 +8,8 @@
 
     -fx-border-color: white;
     -fx-border-width: 0px 0px 2px 0px;
+
+    -fx-effect: dropshadow(two-pass-box, #00aef8, 15,0,0.1,3);
 }
 
 .background-side-menu {

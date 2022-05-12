@@ -14,9 +14,9 @@ public class VisualizzaPasswordController implements Initializable {
     Credenziali credenziali = null;
     // dichiarazione oggetti di scena
     @FXML TableView<Credenziali> tableViewCredenziali = new TableView<>();
-    @FXML TableColumn colonnaSitoWeb = new TableColumn<Credenziali, String>("Sito Web");
-    @FXML TableColumn colonnaNomeUtente = new TableColumn<Credenziali, String>("Nome utente");
-    @FXML TableColumn colonnaPassword = new TableColumn<Credenziali, String>("Password");
+    @FXML TableColumn colonnaSitoWeb = new TableColumn<Credenziali, String>("");
+    @FXML TableColumn colonnaNomeUtente = new TableColumn<Credenziali, String>("");
+    @FXML TableColumn colonnaPassword = new TableColumn<Credenziali, String>("");
 
     // metodo initialize
     @Override

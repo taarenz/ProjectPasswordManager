@@ -3,6 +3,9 @@
     -fx-background-color: linear-gradient(to bottom right, lightblue .05%,#00B6F5 70%, #0079FF 100% );
 }
 
+.title-passenger {
+    -fx-effect: dropshadow(two-pass-box, #0059ff, 15,0,0.1,3);
+}
 .bottone-login {
     /* colore sfondo bottone */
     -fx-background-color: #0091f8;
