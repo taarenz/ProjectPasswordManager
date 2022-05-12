@@ -19,21 +19,25 @@ public class MainAppController {
     @FXML Button bottoneSwitchAbout;
 
     // metodi per cambiare l'ancorPane (Main view)
-    public void switchAnchorPane(String path) throws Exception{
+    public void switchScene(String path) throws Exception {
         Parent root = null;
 
-        root = FXMLLoader.load(getClass().getResource(path));
+        try {
+            root = FXMLLoader.load(getClass().getResource(path));
+        } catch (Exception e){
+            System.out.println("ERRORE NEL CARICAMENTO");
+        }
 
         borderPane.setCenter(root);
     }
 
     public void scenaNuovaPassword() throws Exception {
-        switchAnchorPane("/main/application/nuova-password-view.fxml");
+        switchScene("/main/application/nuova-password-view.fxml");
+    }
+    public void scenaModificaPassword() throws Exception {
+        switchScene("/main/application/modifica-password-view.fxml");
     }
 
-    public void scenaModificaPassword() throws Exception {
-        switchAnchorPane("/main/application/modifica-password-view.fxml");
-    }
 
 
 }

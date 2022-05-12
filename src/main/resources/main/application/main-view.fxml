@@ -17,7 +17,7 @@
                   <Font name="System Bold" size="27.0" />
                </font>
             </Label>
-            <Button fx:id="bottoneSwitchNuovaPassword" mnemonicParsing="false" onAction="#scenaModificaPassword" prefHeight="69.0" prefWidth="177.0" styleClass="button-side-menu" stylesheets="@../../css/style-main-view.css" text="NUOVA PASSWORD">
+            <Button fx:id="bottoneSwitchNuovaPassword" mnemonicParsing="false" onAction="#scenaNuovaPassword" prefHeight="69.0" prefWidth="177.0" styleClass="button-side-menu" stylesheets="@../../css/style-main-view.css" text="NUOVA PASSWORD">
                <font>
                   <Font size="16.0" />
                </font>
