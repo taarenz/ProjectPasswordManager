@@ -52,8 +52,6 @@ public class LoginController implements Initializable {
         } catch (Exception e){
             System.out.println("ERRORE FILE");
         }
-
-
     }
 
     public void loginAction(ActionEvent event) throws Exception{
