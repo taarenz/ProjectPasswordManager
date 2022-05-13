@@ -2,10 +2,8 @@ package main.application.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
+import main.application.MainApp;
 import main.application.model.Credenziali;
 
 import java.net.URL;
@@ -18,6 +16,7 @@ public class ModificaPasswordController implements Initializable {
     @FXML PasswordField passwordFieldNuovaPasswordUno;
     @FXML PasswordField passwordFieldNuovaPasswordDue;
     @FXML Button bottoneModifica;
+    @FXML Button bottoneElimina;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -66,6 +65,37 @@ public class ModificaPasswordController implements Initializable {
             alert.setTitle("Errore");
             alert.setHeaderText("Campi non completati");
             alert.setContentText("Tutti i campi devono essere completati");
+
+            alert.showAndWait();
+        }
+
+    }
+
+    public void confermaBottoneElimina(){
+        // verifica che la choice box non sia vuota
+        if(!choiceBoxSitoDaModificare.getSelectionModel().isEmpty()) {
+            //richiesta conferma
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sicuro di voler cancellare la password selezionata?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                // processo di eliminazione
+                Credenziali credenzialiElimate = choiceBoxSitoDaModificare.getValue();
+                if(MainAppController.listaCredenzialiUtente.contains(credenzialiElimate)){
+                    MainAppController.listaCredenzialiUtente.remove(credenzialiElimate);
+                } else {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Errore");
+                    alert.setHeaderText("Impossibile trovare le credenziali selezionate");
+
+                    alert.showAndWait();
+                }
+            }
+        } else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore");
+            alert.setHeaderText("Campi non compilati");
+            alert.setContentText("Per poter eliminare le credenziali bisogna obbligatoriamente inserire nella ChoiceBox la credenziale da eliminare.");
 
             alert.showAndWait();
         }

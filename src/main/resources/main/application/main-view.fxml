@@ -38,7 +38,7 @@
                </font>
             </Button>
             <Button fx:id="bottoneSwitchAbout" mnemonicParsing="false" prefHeight="69.0" prefWidth="186.0" styleClass="button-side-menu" text="ABOUT" />
-            <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="175.0" styleClass="button-log-out" text="LOGOUT">
+            <Button fx:id="bottoneLogOut" mnemonicParsing="false" onAction="#logOut" prefHeight="43.0" prefWidth="175.0" styleClass="button-log-out" text="LOGOUT">
                <VBox.margin>
                   <Insets top="124.0" />
                </VBox.margin>

@@ -2,13 +2,17 @@ package main.application.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import main.application.model.Credenziali;
 
 import java.net.URL;
@@ -26,6 +30,7 @@ public class MainAppController implements Initializable {
     @FXML Button bottoneSwitchVisualizzaPassword;
     @FXML Button bottoneSwitchSecurityCheck;
     @FXML Button bottoneSwitchAbout;
+    @FXML Button bottoneLogOut;
 
 
     // metodo initialize
@@ -56,5 +61,16 @@ public class MainAppController implements Initializable {
 
     public void scenaVisualizzaPassword() throws Exception{
         switchScene("/main/application/visualizza-password-view.fxml");
+    }
+
+    public void logOut(ActionEvent event) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("/main/application/login-view.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("LOGIN");
+        stage.show();
+        // print sul terminale
+        System.out.println("OK");
     }
 }

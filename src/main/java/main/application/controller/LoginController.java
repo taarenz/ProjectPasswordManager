@@ -84,7 +84,7 @@ public class LoginController implements Initializable {
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
-            stage.setTitle("ProjectManager");
+            stage.setTitle("LOGIN");
             stage.show();
             // print sul terminale
             System.out.println("OK");
