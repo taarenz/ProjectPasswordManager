@@ -1,0 +1,106 @@
+.background {
+    -fx-background-color: linear-gradient(to bottom left, #cedbe3 .05%,#00B6F5 70%, #006fff 100% );
+}
+
+.password-text {
+    -fx-border-width: 2px;
+    -fx-border-color: white;
+
+    -fx-background-color: #67a7ff;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+
+    -fx-font-size: 20px;
+    -fx-alignment: center;
+}
+
+.check-box .box {
+
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 5px;
+    -fx-border-color: #0060ec;
+    -fx-border-width: 2px;
+    -fx-border-radius:5px;
+
+}
+
+.check-box:selected .mark {
+    -fx-shape: "M1.73,12.91 8.1,19.28 22.79,4.59 22.79,1.59 8.1,16.28 1.73,9.91";
+    -fx-background-color: white;
+
+}
+
+.check-box:selected .box {
+
+    -fx-background-color: #28a3f4;
+}
+
+.slider .track{
+    -fx-background-color: linear-gradient(to left, #6a87fc, lightskyblue);
+    -fx-background-radius: 0;
+}
+
+.slider .thumb {
+    -fx-pref-height: 30px;
+    -fx-background-color: #5454ff;
+}
+
+.bottone-genera {
+    /* colore sfondo bottone */
+    -fx-background-color: #0091f8;
+    -fx-background-radius: 20px;
+    /* testo del bottone */
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+}
+
+.bottone-genera:hover{
+    -fx-background-color: #050c98;
+    -fx-background-radius: 20px;
+    /* testo del bottone */
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-fill: white;
+}
+.bottone-genera:pressed{
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #050c98;
+    -fx-border-radius: 20px;
+    -fx-border-color: #050c98;
+    -fx-border-width: 3px;
+
+    -fx-background-radius: 30px;
+    /* testo del bottone */
+    -fx-font-weight: bold;
+}
+
+.bottone-conferma {
+    /* colore sfondo bottone */
+    -fx-background-color: #0099f8;
+    -fx-background-radius: 20px;
+    /* testo del bottone */
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+}
+
+.bottone-conferma:hover{
+    -fx-background-color: #05c200;
+    -fx-background-radius: 20px;
+    /* testo del bottone */
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-fill: white;
+}
+.bottone-conferma:pressed{
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #05c200;
+    -fx-border-radius: 20px;
+    -fx-border-color: #05c200;
+    -fx-border-width: 1px;
+
+    -fx-background-radius: 30px;
+    /* testo del bottone */
+    -fx-font-weight: bold;
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="322.0" prefWidth="318.0" styleClass="background" stylesheets="@../../css/style-popup-psw.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.application.controller.PopUpGenerazionePSWController">
+   <children>
+      <Slider fx:id="lunghezzaPassword" blockIncrement="1.0" layoutX="9.0" layoutY="126.0" max="20.0" min="6.0" prefHeight="25.0" prefWidth="303.0" value="16.0" />
+      <CheckBox fx:id="lettereNumeriCheckbox" disable="true" layoutX="110.0" layoutY="167.0" mnemonicParsing="false" selected="true" text="Lettere/numeri" textFill="WHITE" />
+      <CheckBox fx:id="caratteriSpecialiCheckbox" layoutX="110.0" layoutY="191.0" mnemonicParsing="false" text="Caratteri speciali" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="maiuscoleCheckbox" layoutX="110.0" layoutY="217.0" mnemonicParsing="false" text="Maiuscole" textFill="WHITE" />
+      <Button fx:id="generaPassword" layoutX="47.0" layoutY="269.0" mnemonicParsing="false" onAction="#generatePassword" prefHeight="30.0" prefWidth="133.0" styleClass="bottone-genera" text="Genera password" />
+      <Label layoutX="9.0" layoutY="14.0" prefHeight="104.0" prefWidth="303.0" styleClass="password-text" text="Password" />
+      <Button layoutX="189.0" layoutY="267.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" styleClass="bottone-conferma" text="Conferma" />
+      <Label layoutX="14.0" layoutY="151.0" text="6" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="287.0" layoutY="151.0" text="20" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
