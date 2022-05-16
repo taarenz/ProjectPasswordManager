@@ -56,29 +56,28 @@ public class LoginController implements Initializable {
 
     public void loginAction(ActionEvent event) throws Exception{
 
-
-        Connection connection = DBHandler.getConnection();
-//        System.out.print(connection);
-
-        try {
-
-            String query = "SELECT * FROM users WHERE username = ?";
-            PreparedStatement s = connection.prepareStatement(query);
-            s.setString(1, textFieldNomeUtente.getText());
-
-            ResultSet rs = s.executeQuery();
-            while (rs.next()){
-                //TODO: check password hash
-                System.out.println(rs.getString("username"));
-                MainApp.loggedUser = rs.getInt("id");
-            }
-
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
         if(utenteSalvato.equals(new Utente(textFieldNomeUtente.getText(),textFieldPassword.getText()))){
+            // connessione con il db
+//            Connection connection = DBHandler.getConnection();
+////          System.out.print(connection);
+//
+//            try {
+//
+//                String query = "SELECT * FROM users WHERE username = ?";
+//                PreparedStatement s = connection.prepareStatement(query);
+//                s.setString(1, textFieldNomeUtente.getText());
+//
+//                ResultSet rs = s.executeQuery();
+//                while (rs.next()){
+//                    //TODO: check password hash
+//                    System.out.println(rs.getString("username"));
+//                    MainApp.loggedUser = rs.getInt("id");
+//                }
+//
+//            } catch (SQLException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
             // caricamento della nuova scena
             root = FXMLLoader.load(getClass().getResource("/main/application/main-view.fxml"));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();

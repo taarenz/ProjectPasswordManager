@@ -1,8 +1,13 @@
 package main.application.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import main.application.MainApp;
 import main.application.model.Credenziali;
 
@@ -11,12 +16,16 @@ import java.util.ResourceBundle;
 
 public class ModificaPasswordController implements Initializable {
     // dichiarazione degli oggetti di scena
+    @FXML Parent root;
     @FXML ChoiceBox<Credenziali> choiceBoxSitoDaModificare;
     @FXML PasswordField passwordFieldVecchiaPassword;
     @FXML PasswordField passwordFieldNuovaPasswordUno;
     @FXML PasswordField passwordFieldNuovaPasswordDue;
     @FXML Button bottoneModifica;
     @FXML Button bottoneElimina;
+
+    // variabile statica per la password generata casualmente
+    public static String passwordGenerata = "";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -83,6 +92,11 @@ public class ModificaPasswordController implements Initializable {
                 Credenziali credenzialiElimate = choiceBoxSitoDaModificare.getValue();
                 if(MainAppController.listaCredenzialiUtente.contains(credenzialiElimate)){
                     MainAppController.listaCredenzialiUtente.remove(credenzialiElimate);
+
+                    passwordFieldVecchiaPassword.clear();
+                    passwordFieldNuovaPasswordUno.clear();
+                    passwordFieldNuovaPasswordDue.clear();
+                    choiceBoxSitoDaModificare.getSelectionModel().clearSelection();
                 } else {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Errore");
@@ -129,5 +143,25 @@ public class ModificaPasswordController implements Initializable {
         }
 
         return -1;
+    }
+
+    // metodo per aprire il popup
+    public void aperturaPopupGenerazionePassword() throws Exception{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/application/popup-generazione-psw.fxml"));
+        root = loader.load();
+        Scene newScene = new Scene(root);
+
+        Stage inputStage = new Stage();
+        inputStage.setScene(newScene);
+        inputStage.setTitle("Generazione Password");
+        inputStage.initModality(Modality.APPLICATION_MODAL);
+        inputStage.showAndWait();
+
+        if(!PopUpGenerazionePSWController.passwordGenerata.equals("")){
+            passwordFieldNuovaPasswordUno.setText(PopUpGenerazionePSWController.passwordGenerata);
+            passwordFieldNuovaPasswordDue.setText(PopUpGenerazionePSWController.passwordGenerata);
+        }
+
+        PopUpGenerazionePSWController.passwordGenerata = "";
     }
 }

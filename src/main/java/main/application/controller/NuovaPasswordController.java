@@ -3,16 +3,24 @@ package main.application.controller;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import main.application.model.Credenziali;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class NuovaPasswordController implements Initializable {
+    // dichiarazione variabili
+    Parent root;
     // dichiarazione delle variabili di scena
     @FXML TextField textFieldUrlSito;
     @FXML TextField textFieldNomeUtente;
@@ -20,11 +28,8 @@ public class NuovaPasswordController implements Initializable {
     @FXML PasswordField passwordFieldDue;
     @FXML Button bottoneConfermaInserimento;
     @FXML Button generaPassword;
-    @FXML Slider lunghezzaPassword;
-    @FXML CheckBox lettereNumeriCheckbox;
-    @FXML CheckBox caratteriSpecialiCheckbox;
-    @FXML CheckBox maiuscoleCheckbox;
 
+    public static String passwordGenerata = "";
     // initialize per aggiungere listener allo slider
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
@@ -107,6 +112,26 @@ public class NuovaPasswordController implements Initializable {
         }
 
         return true;
+    }
+
+    // metodo che apre il popup per la generazione delle password
+    public void aperturaPopupGenerazionePassword() throws Exception{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/application/popup-generazione-psw.fxml"));
+        root = loader.load();
+        Scene newScene = new Scene(root);
+
+        Stage inputStage = new Stage();
+        inputStage.setScene(newScene);
+        inputStage.setTitle("Generazione Password");
+        inputStage.initModality(Modality.APPLICATION_MODAL);
+        inputStage.showAndWait();
+
+        if(!passwordGenerata.equals("")){
+            passwordFieldUno.setText(PopUpGenerazionePSWController.passwordGenerata);
+            passwordFieldDue.setText(PopUpGenerazionePSWController.passwordGenerata);
+        }
+
+        PopUpGenerazionePSWController.passwordGenerata = "";
     }
 
 }

@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="322.0" prefWidth="318.0" styleClass="background" stylesheets="@../../css/style-popup-psw.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.application.controller.PopUpGenerazionePSWController">
+<AnchorPane fx:id="anchorPane" prefHeight="322.0" prefWidth="318.0" styleClass="background" stylesheets="@../../css/style-popup-psw.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.application.controller.PopUpGenerazionePSWController">
    <children>
       <Slider fx:id="lunghezzaPassword" blockIncrement="1.0" layoutX="9.0" layoutY="126.0" max="20.0" min="6.0" prefHeight="25.0" prefWidth="303.0" value="16.0" />
       <CheckBox fx:id="lettereNumeriCheckbox" disable="true" layoutX="110.0" layoutY="167.0" mnemonicParsing="false" selected="true" text="Lettere/numeri" textFill="WHITE" />
@@ -18,9 +17,8 @@
          </font>
       </CheckBox>
       <CheckBox fx:id="maiuscoleCheckbox" layoutX="110.0" layoutY="217.0" mnemonicParsing="false" text="Maiuscole" textFill="WHITE" />
-      <Button fx:id="generaPassword" layoutX="47.0" layoutY="269.0" mnemonicParsing="false" onAction="#generatePassword" prefHeight="30.0" prefWidth="133.0" styleClass="bottone-genera" text="Genera password" />
-      <Label layoutX="9.0" layoutY="14.0" prefHeight="104.0" prefWidth="303.0" styleClass="password-text" text="Password" />
-      <Button layoutX="189.0" layoutY="267.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" styleClass="bottone-conferma" text="Conferma" />
+      <Button fx:id="generaPassword" layoutX="47.0" layoutY="269.0" mnemonicParsing="false" onAction="#creazionePassword" prefHeight="30.0" prefWidth="133.0" styleClass="bottone-genera" text="Genera password" />
+      <Button fx:id="confermaAggiunta" layoutX="189.0" layoutY="267.0" mnemonicParsing="false" onAction="#confermaPassword" prefHeight="30.0" prefWidth="87.0" styleClass="bottone-conferma" text="Conferma" />
       <Label layoutX="14.0" layoutY="151.0" text="6" textFill="WHITE">
          <font>
             <Font size="15.0" />
@@ -31,5 +29,6 @@
             <Font size="15.0" />
          </font>
       </Label>
+      <Label fx:id="labelPassword" layoutX="9.0" layoutY="14.0" prefHeight="104.0" prefWidth="303.0" styleClass="password-text" />
    </children>
 </AnchorPane>

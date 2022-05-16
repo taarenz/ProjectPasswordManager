@@ -6,7 +6,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.Locale;
@@ -14,11 +17,17 @@ import java.util.ResourceBundle;
 
 public class PopUpGenerazionePSWController implements Initializable {
     // dichiarazione attributi
+    @FXML AnchorPane anchorPane;
     @FXML Button generaPassword;
     @FXML Slider lunghezzaPassword;
     @FXML CheckBox lettereNumeriCheckbox;
     @FXML CheckBox caratteriSpecialiCheckbox;
     @FXML CheckBox maiuscoleCheckbox;
+    @FXML Label labelPassword;  // indica dove verrà visualizzata la password generata
+
+    @FXML Button confermaAggiunta;
+
+    public static String passwordGenerata = "";
 
     private int passwordLength; // indica la lunghezza della password indicata con lo slider
     private final String[] alphabet = new String[] {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
@@ -34,6 +43,19 @@ public class PopUpGenerazionePSWController implements Initializable {
                 passwordLength = (int) lunghezzaPassword.getValue();
             }
         });
+    }
+
+    // funzione al click del bottone genera password
+    public void creazionePassword (){
+        passwordGenerata = generatePassword();
+        labelPassword.setText(passwordGenerata);
+    }
+
+    // metodo che setta il testo per le password
+    public void confermaPassword(){
+        NuovaPasswordController.passwordGenerata = labelPassword.getText();
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        stage.close();
     }
 
     //metodo per generare password
@@ -93,7 +115,7 @@ public class PopUpGenerazionePSWController implements Initializable {
 
         System.out.println("Password generata: "+arrayConvert(array));
 
-        return "";
+        return arrayConvert(array);
     }
 
     //metodi e variabili ausiliari per generatePassword()
