@@ -49,11 +49,12 @@ public class PopUpGenerazionePSWController implements Initializable {
     public void creazionePassword (){
         passwordGenerata = generatePassword();
         labelPassword.setText(passwordGenerata);
+        passwordGenerata = "";
     }
 
     // metodo che setta il testo per le password
     public void confermaPassword(){
-        NuovaPasswordController.passwordGenerata = labelPassword.getText();
+        passwordGenerata = labelPassword.getText();
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         stage.close();
     }

@@ -28,8 +28,6 @@ public class NuovaPasswordController implements Initializable {
     @FXML PasswordField passwordFieldDue;
     @FXML Button bottoneConfermaInserimento;
     @FXML Button generaPassword;
-
-    public static String passwordGenerata = "";
     // initialize per aggiungere listener allo slider
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
@@ -126,7 +124,7 @@ public class NuovaPasswordController implements Initializable {
         inputStage.initModality(Modality.APPLICATION_MODAL);
         inputStage.showAndWait();
 
-        if(!passwordGenerata.equals("")){
+        if(!PopUpGenerazionePSWController.passwordGenerata.equals("")){
             passwordFieldUno.setText(PopUpGenerazionePSWController.passwordGenerata);
             passwordFieldDue.setText(PopUpGenerazionePSWController.passwordGenerata);
         }

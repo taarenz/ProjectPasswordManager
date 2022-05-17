@@ -25,7 +25,6 @@ public class ModificaPasswordController implements Initializable {
     @FXML Button bottoneElimina;
 
     // variabile statica per la password generata casualmente
-    public static String passwordGenerata = "";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

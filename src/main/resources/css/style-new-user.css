@@ -1,0 +1,35 @@
+.background-login {
+    -fx-background-color: linear-gradient(to bottom right, lightblue .05%,#00B6F5 70%, #0079FF 100% );
+}
+
+.text-field-utente {
+    -fx-background-color: transparent;
+    -fx-background-radius: 15px;
+
+    -fx-border-radius: 15px;
+    -fx-border-color: white;
+    -fx-border-width: 5px;
+
+    -fx-prompt-text-fill: white;
+
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+.text-field-password {
+    -fx-background-color: transparent;
+    -fx-background-radius: 15px;
+
+    -fx-border-radius: 15px;
+    -fx-border-color: white;
+    -fx-border-width: 5px;
+
+    -fx-prompt-text-fill: white;
+
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+.title {
+    -fx-effect: dropshadow(two-pass-box, #0059ff, 15,0,0.1,3);
+}
