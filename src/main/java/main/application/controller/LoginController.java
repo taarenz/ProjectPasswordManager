@@ -12,6 +12,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.application.MainApp;
 import main.application.database.DBHandler;
+import main.application.model.Credenziali;
 import main.application.model.Utente;
 
 import java.io.*;
@@ -20,6 +21,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.SecureRandom;
 import java.sql.*;
 import java.util.ResourceBundle;
 
@@ -32,56 +35,75 @@ public class LoginController implements Initializable {
     public Utente utenteSalvato;
 
     // dichiarazione dei componenti di Scena
-    @FXML TextField textFieldNomeUtente;
-    @FXML PasswordField textFieldPassword;
-    @FXML Button loginButton;
-    @FXML Button registratiButton;
+    @FXML
+    TextField textFieldNomeUtente;
+    @FXML
+    PasswordField textFieldPassword;
+    @FXML
+    Button loginButton;
+    @FXML
+    Button registratiButton;
+
+    public LoginController() throws NoSuchAlgorithmException, NoSuchProviderException {
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // caricamento password
-        try {
-            FileInputStream fis = new FileInputStream("src/main/resources/txtFile/utente_criptato.txt");
-            ObjectInputStream os = new ObjectInputStream(fis);
-
-            utenteSalvato = new Utente((Utente) os.readObject());
-
-            os.close();
-
-            System.out.println("OKKKK");
-
-        } catch (Exception e){
-            System.out.println("ERRORE FILE");
-        }
     }
 
-    public void loginAction(ActionEvent event) throws Exception{
+    public void loginAction(ActionEvent event) throws Exception {
 
-        if(utenteSalvato.equals(new Utente(textFieldNomeUtente.getText(),textFieldPassword.getText()))){
-            // connessione con il db
-            Connection connection = DBHandler.getConnection();
+        //TODO eliminare controllo su file in favore del DB
+        //connessione con il db
+        Connection connection = DBHandler.getConnection();
+        boolean loginSuccess = false;
 //          System.out.print(connection);
+        Utente u = new Utente(textFieldNomeUtente.getText(), textFieldPassword.getText());
+        try {
+            String query = "SELECT * FROM users WHERE username = ?";
+            PreparedStatement s = connection.prepareStatement(query);
+            s.setString(1,u.getNomeUtente());
 
-            try {
-
-                String query = "SELECT * FROM users WHERE username = ?";
-                PreparedStatement s = connection.prepareStatement(query);
-                s.setString(1, textFieldNomeUtente.getText());
-
-                ResultSet rs = s.executeQuery();
-                while (rs.next()){
+            ResultSet rs = s.executeQuery();
+            while (rs.next()) {
+                if(rs.getString("password").equals(u.getPassword())){
+                    loginSuccess = true;
                     //TODO: check password hash
-                    System.out.println(rs.getString("username"));
                     MainApp.loggedUser = rs.getInt("id");
+                }
+            }
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        if(loginSuccess) {
+            // caricamento della nuova scena
+            root = FXMLLoader.load(getClass().getResource("/main/application/main-view.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            //Get all user passwords from db
+            try {
+                String query = "SELECT * FROM passwords WHERE user_id = ?";
+                PreparedStatement s = connection.prepareStatement(query);
+                s.setInt(1, MainApp.loggedUser);
+                Credenziali temp;
+                ResultSet rs = s.executeQuery();
+                while (rs.next()) {
+                    String hasUsername = rs.getString("username");
+                    if (rs.wasNull()) {
+                        temp = new Credenziali(rs.getString("password"), rs.getString("website"), MainApp.loggedUser);
+                    }else{
+                        temp = new Credenziali(rs.getString("username"), rs.getString("password"), rs.getString("website"), MainApp.loggedUser);
+                    }
+                    MainAppController.listaCredenzialiUtente.add(temp);
                 }
 
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            // caricamento della nuova scena
-            root = FXMLLoader.load(getClass().getResource("/main/application/main-view.fxml"));
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
             scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("LOGIN");
@@ -93,8 +115,7 @@ public class LoginController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Errore");
             alert.setHeaderText("Login errato");
-            alert.setContentText("Nome utente e/o password errste");
-
+            alert.setContentText("Nome utente e/o password errate");
             alert.showAndWait();
             // print sul terminale
             System.out.println("LOGIN FAILURE");
@@ -115,45 +136,45 @@ public class LoginController implements Initializable {
     }
 
 
-    //Hashing functions (?)
-    public static byte[] getSHA(String input) throws NoSuchAlgorithmException
-    {
-        /* MessageDigest instance for hashing using SHA256 */
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-
-        /* digest() method called to calculate message digest of an input and return array of byte */
-        return md.digest(input.getBytes(StandardCharsets.UTF_8));
+    private static String get_SHA_256_SecurePassword(String passwordToHash,
+                                                     String salt) {
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(salt.getBytes());
+            byte[] bytes = md.digest(passwordToHash.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16)
+                        .substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return generatedPassword;
     }
 
-    public static String toHexString(byte[] hash)
+    String passwordToHash = "password";
+    String salt = getSalt();
+
+    String securePassword = get_SHA_256_SecurePassword(passwordToHash, salt);
+//    System.out.print(securePassword);
+
+    private static String getSalt()
+            throws NoSuchAlgorithmException, NoSuchProviderException
     {
-        /* Convert byte array of hash into digest */
-        BigInteger number = new BigInteger(1, hash);
+        // Always use a SecureRandom generator
+        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
 
-        /* Convert the digest into hex value */
-        StringBuilder hexString = new StringBuilder(number.toString(16));
+        // Create array for salt
+        byte[] salt = new byte[16];
 
-        /* Pad with leading zeros */
-        while (hexString.length() < 32)
-        {
-            hexString.insert(0, '0');
-        }
+        // Get a random salt
+        sr.nextBytes(salt);
 
-        return hexString.toString();
+        // return salt
+        return salt.toString();
     }
 
 }
-
-// try
-//         {
-//         String string1 = "myPassword";
-//         System.out.println("\n" + string1 + " : " + toHexString(getSHA(string1)));
-//
-//         String string2 = "hashtrial";
-//         System.out.println("\n" + string2 + " : " + toHexString(getSHA(string2)));
-//         }
-//         catch (NoSuchAlgorithmException e)
-//         {
-//         System.out.println("Exception thrown for incorrect algorithm: " + e);
-//         }
-//         }

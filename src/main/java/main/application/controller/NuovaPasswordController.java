@@ -10,10 +10,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.application.MainApp;
+import main.application.database.DBHandler;
 import main.application.model.Credenziali;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -41,13 +46,35 @@ public class NuovaPasswordController implements Initializable {
                 // verifica quale costruttore utilizzare
                 Credenziali temp;
                 if(textFieldNomeUtente.getText().equals("")){
-                    temp = new Credenziali(passwordFieldDue.getText(), textFieldUrlSito.getText());
+                    temp = new Credenziali(passwordFieldDue.getText(), textFieldUrlSito.getText(), MainApp.loggedUser);
                 } else{
-                    temp = new Credenziali(textFieldNomeUtente.getText(), passwordFieldDue.getText(), textFieldUrlSito.getText());
+                    temp = new Credenziali(textFieldNomeUtente.getText(), passwordFieldDue.getText(), textFieldUrlSito.getText(), MainApp.loggedUser);
                 }
 
                 // controllo che la lista non contenga già la credenziale inserita
                 if(!credenzialePresente(temp)){
+
+                    Connection connection = DBHandler.getConnection();
+                    try {
+                        String query = "INSERT INTO passwords (website, username, password, user_id, created_at)"+"values (?, ?, ?, ?, ?)";
+                        PreparedStatement s = connection.prepareStatement(query);
+                        s.setString(1, temp.getUrlSitoWeb());
+                        //TODO: password hash
+                        s.setString(2, temp.getNomeUtente());
+                        s.setString(3, temp.getPassword());
+                        s.setInt(4, temp.getUser_id());
+                        s.setTimestamp(5, new java.sql.Timestamp(new java.util.Date().getTime()));
+
+                        int rs = s.executeUpdate();
+                        if (rs==1) {
+                            System.out.println("Password added");
+                        }
+                    } catch (SQLException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+//
+
                     // password non già inserita
                     MainAppController.listaCredenzialiUtente.add(temp);
 

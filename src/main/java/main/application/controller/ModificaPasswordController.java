@@ -9,9 +9,13 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.application.MainApp;
+import main.application.database.DBHandler;
 import main.application.model.Credenziali;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ModificaPasswordController implements Initializable {
@@ -42,7 +46,35 @@ public class ModificaPasswordController implements Initializable {
                 if(passwordFieldNuovaPasswordUno.getText().equals(passwordFieldNuovaPasswordDue.getText())){
                     // cambio della password
                     int indice = getIndiceOggetto(choiceBoxSitoDaModificare.getValue());
+                    //TODO scrivere la nuova password sul database
+                    Credenziali previousPassword = MainAppController.listaCredenzialiUtente.get(indice);
                     MainAppController.listaCredenzialiUtente.get(indice).cambioPassword(passwordFieldNuovaPasswordUno.getText());
+                    Credenziali temp = MainAppController.listaCredenzialiUtente.get(indice);
+                    Connection connection = DBHandler.getConnection();
+                    String tempUsername;
+                    if(previousPassword.getNomeUtente()==null)
+                        tempUsername = null;
+                    else
+                        tempUsername = previousPassword.getNomeUtente();
+
+                    try {
+                        String query = "UPDATE passwords SET password = ? WHERE user_id = ? AND website = ? AND username = ? AND password = ?";
+                        PreparedStatement s = connection.prepareStatement(query);
+                        s.setString(1, temp.getPassword());
+                        //TODO: password hash
+                        s.setInt(2, previousPassword.getUser_id());
+                        s.setString(3, previousPassword.getUrlSitoWeb());
+                        s.setString(4, tempUsername);
+                        s.setString(5, previousPassword.getPassword());
+
+                        int rs = s.executeUpdate();
+                        if (rs==1) {
+                            System.out.println("Password updated");
+                        }
+                    } catch (SQLException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
 
                     choiceBoxSitoDaModificare.setItems(MainAppController.listaCredenzialiUtente);
 

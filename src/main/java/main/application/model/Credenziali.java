@@ -9,19 +9,25 @@ public class Credenziali{
     private String urlSitoWeb;
     private boolean hasNomeUtente;
 
+    private int user_id;
+
+    private int id;
+
     // costruttore
-    public Credenziali(String password, String urlSitoWeb) {
+    public Credenziali(String password, String urlSitoWeb, int user_id) {
         this.nomeUtente = null;
         this.password = password;
         this.urlSitoWeb = urlSitoWeb;
         this.hasNomeUtente = false;
+        this.user_id = user_id;
     }
 
-    public Credenziali(String nomeUtente, String password, String urlSitoWeb) {
+    public Credenziali(String nomeUtente, String password, String urlSitoWeb, int user_id) {
         this.nomeUtente = nomeUtente;
         this.password = password;
         this.urlSitoWeb = urlSitoWeb;
         this.hasNomeUtente = true;
+        this.user_id = user_id;
     }
 
     // metodi getter e setter
@@ -43,6 +49,8 @@ public class Credenziali{
     public void setUrlSitoWeb(String urlSitoWeb) {
         this.urlSitoWeb = urlSitoWeb;
     }
+
+    public int getUser_id(){return user_id;}
 
     // metodo per modificare la password
     public void cambioPassword(String password){

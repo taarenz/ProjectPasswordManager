@@ -7,7 +7,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import main.application.MainApp;
+import main.application.database.DBHandler;
 import main.application.model.Utente;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class RegistrazioneController {
     // dichiarazione elementi di scena
@@ -23,6 +30,23 @@ public class RegistrazioneController {
         if(campiCheck()){
             // creazione dell'utente
             Utente u = new Utente(textFieldNomeUtente.getText(), passwordFieldPassword.getText());
+            Connection connection = DBHandler.getConnection();
+            try {
+                String query = "INSERT INTO users (username, password)"+"values (?, ?)";
+                PreparedStatement s = connection.prepareStatement(query);
+                s.setString(1, u.getNomeUtente());
+                //TODO: password hash
+                s.setString(2, u.getPassword());
+
+                int rs = s.executeUpdate();
+                if (rs==1) {
+                    System.out.println("User added");
+                }
+
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
             Stage stage = (Stage) anchorPane.getScene().getWindow();
             stage.close();

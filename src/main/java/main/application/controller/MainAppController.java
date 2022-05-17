@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import main.application.MainApp;
 import main.application.model.Credenziali;
 
 import java.net.URL;
@@ -64,6 +65,7 @@ public class MainAppController implements Initializable {
     }
 
     public void logOut(ActionEvent event) throws Exception{
+        MainApp.loggedUser = 0;
         Parent root = FXMLLoader.load(getClass().getResource("/main/application/login-view.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -71,6 +73,6 @@ public class MainAppController implements Initializable {
         stage.setTitle("LOGIN");
         stage.show();
         // print sul terminale
-        System.out.println("OK");
+        System.out.println(MainApp.loggedUser);
     }
 }
