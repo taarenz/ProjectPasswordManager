@@ -153,6 +153,7 @@ public class ModificaPasswordController implements Initializable {
         Stage inputStage = new Stage();
         inputStage.setScene(newScene);
         inputStage.setTitle("Generazione Password");
+        inputStage.setResizable(false);
         inputStage.initModality(Modality.APPLICATION_MODAL);
         inputStage.showAndWait();
 

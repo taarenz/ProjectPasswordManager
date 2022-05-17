@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="main.application.RegisterView"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane fx:id="anchorPane" prefHeight="316.0" prefWidth="370.0" styleClass="background-login" stylesheets="@../../css/style-new-user.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.application.controller.RegistrazioneController">
+   <children>
+      <Button fx:id="bottoneConferma" layoutX="133.0" layoutY="259.0" mnemonicParsing="false" onAction="#confermaRegistrazione" prefHeight="40.0" prefWidth="106.0" styleClass="button-registrati" text="REGISTRATI" />
+      <Label alignment="CENTER" layoutX="171.0" layoutY="8.0" prefHeight="81.0" prefWidth="350.0" styleClass="title" text="REGISTRAZIONE" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <font>
+            <Font name="System Bold" size="39.0" />
+         </font>
+      </Label>
+      <VBox layoutX="31.0" layoutY="89.0" prefHeight="170.0" prefWidth="309.0">
+         <children>
+            <TextField fx:id="textFieldNomeUtente" alignment="CENTER" promptText="nome utente" styleClass="text-field-utente">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <PasswordField fx:id="passwordFieldPassword" alignment="CENTER" promptText="password" styleClass="text-field-password">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </PasswordField>
+            <PasswordField fx:id="passwordFieldConferma" alignment="CENTER" promptText="conferma password" styleClass="text-field-password">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </PasswordField>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

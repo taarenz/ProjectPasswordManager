@@ -120,6 +120,7 @@ public class NuovaPasswordController implements Initializable {
 
         Stage inputStage = new Stage();
         inputStage.setScene(newScene);
+        inputStage.setResizable(false);
         inputStage.setTitle("Generazione Password");
         inputStage.initModality(Modality.APPLICATION_MODAL);
         inputStage.showAndWait();

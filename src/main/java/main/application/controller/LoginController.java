@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.application.MainApp;
 import main.application.database.DBHandler;
@@ -28,7 +29,7 @@ public class LoginController implements Initializable {
     private Scene scene;
     private Parent root;
     // dichiarazione variabili locali
-    Utente utenteSalvato;
+    public Utente utenteSalvato;
 
     // dichiarazione dei componenti di Scena
     @FXML TextField textFieldNomeUtente;
@@ -98,6 +99,19 @@ public class LoginController implements Initializable {
             // print sul terminale
             System.out.println("LOGIN FAILURE");
         }
+    }
+
+    public void switchregistratiView() throws Exception{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/application/register-view.fxml"));
+        root = loader.load();
+        Scene newScene = new Scene(root);
+
+        Stage inputStage = new Stage();
+        inputStage.setResizable(false);
+        inputStage.setScene(newScene);
+        inputStage.setTitle("Registrazione");
+        inputStage.initModality(Modality.APPLICATION_MODAL);
+        inputStage.showAndWait();
     }
 
 

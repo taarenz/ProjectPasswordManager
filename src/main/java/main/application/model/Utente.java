@@ -94,7 +94,7 @@ public class Utente implements Serializable {
 
             return nomeThis.equals(nomeU2) && passwordThis.equals(passwordU2);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
