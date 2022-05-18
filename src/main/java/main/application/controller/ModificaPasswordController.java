@@ -47,26 +47,30 @@ public class ModificaPasswordController implements Initializable {
                     // cambio della password
                     int indice = getIndiceOggetto(choiceBoxSitoDaModificare.getValue());
                     //TODO scrivere la nuova password sul database
-                    Credenziali previousPassword = MainAppController.listaCredenzialiUtente.get(indice);
+                    int previousCredentialUserID = MainAppController.listaCredenzialiUtente.get(indice).getUser_id();
+                    String previousCredentialWebsite = MainAppController.listaCredenzialiUtente.get(indice).getUrlSitoWeb();
+                    String previousCredentiaUsername = MainAppController.listaCredenzialiUtente.get(indice).getNomeUtente();
+                    String previousCredentialPassword = MainAppController.listaCredenzialiUtente.get(indice).getPassword();
+
+
                     MainAppController.listaCredenzialiUtente.get(indice).cambioPassword(passwordFieldNuovaPasswordUno.getText());
                     Credenziali temp = MainAppController.listaCredenzialiUtente.get(indice);
+
                     Connection connection = DBHandler.getConnection();
+
                     String tempUsername;
-                    if(previousPassword.getNomeUtente()==null)
-                        tempUsername = null;
-                    else
-                        tempUsername = previousPassword.getNomeUtente();
+                    tempUsername = previousCredentiaUsername;
 
                     try {
                         String query = "UPDATE passwords SET password = ? WHERE user_id = ? AND website = ? AND username = ? AND password = ?";
                         PreparedStatement s = connection.prepareStatement(query);
                         s.setString(1, temp.getPassword());
                         //TODO: password hash
-                        s.setInt(2, previousPassword.getUser_id());
-                        s.setString(3, previousPassword.getUrlSitoWeb());
-                        s.setString(4, tempUsername);
-                        s.setString(5, previousPassword.getPassword());
-
+                        s.setInt(2, previousCredentialUserID);
+                        s.setString(3, previousCredentialWebsite);
+                        s.setString(4, previousCredentiaUsername);
+                        s.setString(5, previousCredentialPassword);
+                        System.out.println(s);
                         int rs = s.executeUpdate();
                         if (rs==1) {
                             System.out.println("Password updated");
