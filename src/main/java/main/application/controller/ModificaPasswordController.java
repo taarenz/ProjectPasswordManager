@@ -126,6 +126,25 @@ public class ModificaPasswordController implements Initializable {
                 // processo di eliminazione
                 Credenziali credenzialiElimate = choiceBoxSitoDaModificare.getValue();
                 if(MainAppController.listaCredenzialiUtente.contains(credenzialiElimate)){
+                    int indice = getIndiceOggetto(choiceBoxSitoDaModificare.getValue());
+                    Credenziali temp = MainAppController.listaCredenzialiUtente.get(indice);
+
+                    Connection connection = DBHandler.getConnection();
+                    try {
+                        String query = "DELETE FROM passwords WHERE user_id = ? AND website = ? AND username = ? AND password = ?";
+                        PreparedStatement s = connection.prepareStatement(query);
+                        s.setInt(1, temp.getUser_id());
+                        s.setString(2, temp.getUrlSitoWeb());
+                        s.setString(3, temp.getNomeUtente());
+                        s.setString(4, temp.getPassword());
+                        int rs = s.executeUpdate();
+                        if (rs==1) {
+                            System.out.println("Password deleted");
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
                     MainAppController.listaCredenzialiUtente.remove(credenzialiElimate);
 
                     passwordFieldVecchiaPassword.clear();
