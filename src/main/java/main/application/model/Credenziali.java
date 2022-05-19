@@ -68,8 +68,8 @@ public class Credenziali{
     // metodo toString
     public String toString(){
         if(this.hasNomeUtente)
-            return this.urlSitoWeb+" - ("+this.nomeUtente+") "+password;
+            return "Sito: " + this.urlSitoWeb+ " - User: "+this.nomeUtente+" - Password: "+password;
         else
-            return this.urlSitoWeb + " " + password;
+            return "Sito: " + this.urlSitoWeb+" - Password: "+password;
     }
 }

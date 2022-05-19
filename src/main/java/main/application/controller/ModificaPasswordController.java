@@ -22,7 +22,7 @@ public class ModificaPasswordController implements Initializable {
     // dichiarazione degli oggetti di scena
     @FXML Parent root;
     @FXML ChoiceBox<Credenziali> choiceBoxSitoDaModificare;
-    @FXML PasswordField passwordFieldVecchiaPassword;
+    @FXML CheckBox checkBoxConferma;  // obbligatoria se si vuole modificare o eliminare una password
     @FXML PasswordField passwordFieldNuovaPasswordUno;
     @FXML PasswordField passwordFieldNuovaPasswordDue;
     @FXML Button bottoneModifica;
@@ -40,76 +40,65 @@ public class ModificaPasswordController implements Initializable {
         // verifica che tutti i campi siano stati usati
         if(checkCampi()){
             // controllo che le password siano corrette
-            // psw vecchia
-            if(passwordFieldVecchiaPassword.getText().equals(choiceBoxSitoDaModificare.getValue().getPassword())){
-                // controllo che le password nuove siano uguali
-                if(passwordFieldNuovaPasswordUno.getText().equals(passwordFieldNuovaPasswordDue.getText())){
-                    // cambio della password
-                    int indice = getIndiceOggetto(choiceBoxSitoDaModificare.getValue());
-                    //TODO scrivere la nuova password sul database
-                    int previousCredentialUserID = MainAppController.listaCredenzialiUtente.get(indice).getUser_id();
-                    String previousCredentialWebsite = MainAppController.listaCredenzialiUtente.get(indice).getUrlSitoWeb();
-                    String previousCredentiaUsername = MainAppController.listaCredenzialiUtente.get(indice).getNomeUtente();
-                    String previousCredentialPassword = MainAppController.listaCredenzialiUtente.get(indice).getPassword();
+
+            // controllo che le password nuove siano uguali
+            if(passwordFieldNuovaPasswordUno.getText().equals(passwordFieldNuovaPasswordDue.getText())){
+                // cambio della password
+                int indice = getIndiceOggetto(choiceBoxSitoDaModificare.getValue());
+                //TODO scrivere la nuova password sul database
+                int previousCredentialUserID = MainAppController.listaCredenzialiUtente.get(indice).getUser_id();
+                String previousCredentialWebsite = MainAppController.listaCredenzialiUtente.get(indice).getUrlSitoWeb();
+                String previousCredentiaUsername = MainAppController.listaCredenzialiUtente.get(indice).getNomeUtente();
+                String previousCredentialPassword = MainAppController.listaCredenzialiUtente.get(indice).getPassword();
 
 
-                    MainAppController.listaCredenzialiUtente.get(indice).cambioPassword(passwordFieldNuovaPasswordUno.getText());
-                    Credenziali temp = MainAppController.listaCredenzialiUtente.get(indice);
+                MainAppController.listaCredenzialiUtente.get(indice).cambioPassword(passwordFieldNuovaPasswordUno.getText());
+                Credenziali temp = MainAppController.listaCredenzialiUtente.get(indice);
 
-                    Connection connection = DBHandler.getConnection();
+                Connection connection = DBHandler.getConnection();
 
-                    String tempUsername;
-                    tempUsername = previousCredentiaUsername;
+                String tempUsername;
+                tempUsername = previousCredentiaUsername;
 
-                    try {
-                        String query = "UPDATE passwords SET password = ? WHERE user_id = ? AND website = ? AND username = ? AND password = ?";
-                        PreparedStatement s = connection.prepareStatement(query);
-                        s.setString(1, temp.getPassword());
-                        //TODO: password hash
-                        s.setInt(2, previousCredentialUserID);
-                        s.setString(3, previousCredentialWebsite);
-                        s.setString(4, previousCredentiaUsername);
-                        s.setString(5, previousCredentialPassword);
-                        System.out.println(s);
-                        int rs = s.executeUpdate();
-                        if (rs==1) {
-                            System.out.println("Password updated");
-                        }
-                    } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                try {
+                    String query = "UPDATE passwords SET password = ? WHERE user_id = ? AND website = ? AND username = ? AND password = ?";
+                    PreparedStatement s = connection.prepareStatement(query);
+                    s.setString(1, temp.getPassword());
+                    //TODO: password hash
+                    s.setInt(2, previousCredentialUserID);
+                    s.setString(3, previousCredentialWebsite);
+                    s.setString(4, previousCredentiaUsername);
+                    s.setString(5, previousCredentialPassword);
+                    System.out.println(s);
+                    int rs = s.executeUpdate();
+                    if (rs==1) {
+                        System.out.println("Password updated");
                     }
-
-                    choiceBoxSitoDaModificare.setItems(MainAppController.listaCredenzialiUtente);
-
-                    // clear delle caselle di testo
-                    passwordFieldVecchiaPassword.clear();
-                    passwordFieldNuovaPasswordUno.clear();
-                    passwordFieldNuovaPasswordDue.clear();
-                    choiceBoxSitoDaModificare.getSelectionModel().clearSelection();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Errore");
-                    alert.setHeaderText("Password errate");
-                    alert.setContentText("Le password non corrispondono");
-
-                    alert.showAndWait();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
+
+                choiceBoxSitoDaModificare.setItems(MainAppController.listaCredenzialiUtente);
+
+                // clear delle caselle di testo
+                checkBoxConferma.setSelected(false);
+                passwordFieldNuovaPasswordUno.clear();
+                passwordFieldNuovaPasswordDue.clear();
+                choiceBoxSitoDaModificare.getSelectionModel().clearSelection();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Errore");
-                alert.setHeaderText("Password errata");
-                alert.setContentText("La password non corrisponde con quella precedente");
+                alert.setHeaderText("Password errate");
+                alert.setContentText("Le password non corrispondono");
 
-                alert.showAndWait();
+                   alert.showAndWait();
             }
-        } else{
-            // visualizzazione del popup di errore
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Errore");
-            alert.setHeaderText("Campi non completati");
-            alert.setContentText("Tutti i campi devono essere completati");
-
+            alert.setHeaderText("Campi non corretti");
+            alert.setContentText("Per poter modificare la password occorre selezionare il checkbox ed inserire la nuova password");
             alert.showAndWait();
         }
 
@@ -117,7 +106,7 @@ public class ModificaPasswordController implements Initializable {
 
     public void confermaBottoneElimina(){
         // verifica che la choice box non sia vuota
-        if(!choiceBoxSitoDaModificare.getSelectionModel().isEmpty()) {
+        if(!choiceBoxSitoDaModificare.getSelectionModel().isEmpty() && checkBoxConferma.isSelected()) {
             //richiesta conferma
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sicuro di voler cancellare la password selezionata?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
             alert.showAndWait();
@@ -147,7 +136,7 @@ public class ModificaPasswordController implements Initializable {
 
                     MainAppController.listaCredenzialiUtente.remove(credenzialiElimate);
 
-                    passwordFieldVecchiaPassword.clear();
+                    checkBoxConferma.setSelected(false);
                     passwordFieldNuovaPasswordUno.clear();
                     passwordFieldNuovaPasswordDue.clear();
                     choiceBoxSitoDaModificare.getSelectionModel().clearSelection();
@@ -163,7 +152,7 @@ public class ModificaPasswordController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Errore");
             alert.setHeaderText("Campi non compilati");
-            alert.setContentText("Per poter eliminare le credenziali bisogna obbligatoriamente inserire nella ChoiceBox la credenziale da eliminare.");
+            alert.setContentText("Per poter eliminare le credenziali bisogna obbligatoriamente inserire nella ChoiceBox la credenziale da eliminare e selezionare il check box.");
 
             alert.showAndWait();
         }
@@ -172,7 +161,7 @@ public class ModificaPasswordController implements Initializable {
 
     // metodo per verificare che tutti i campo
     private boolean checkCampi(){
-        if(passwordFieldVecchiaPassword.getText().equals(null)){
+        if(!checkBoxConferma.isSelected()){
             return false;
         }
         if(passwordFieldNuovaPasswordUno.getText().equals(null)){

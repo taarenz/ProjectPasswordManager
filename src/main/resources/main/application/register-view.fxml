@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane fx:id="anchorPane" prefHeight="316.0" prefWidth="370.0" styleClass="background-login" stylesheets="@../../css/style-new-user.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.application.controller.RegistrazioneController">
+<AnchorPane fx:id="anchorPane" prefHeight="316.0" prefWidth="370.0" styleClass="background-login" stylesheets="@css/style-new-user.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.application.controller.RegistrazioneController">
    <children>
       <Button fx:id="bottoneConferma" layoutX="133.0" layoutY="259.0" mnemonicParsing="false" onAction="#confermaRegistrazione" prefHeight="40.0" prefWidth="106.0" styleClass="button-registrati" text="REGISTRATI" />
       <Label alignment="CENTER" layoutX="171.0" layoutY="8.0" prefHeight="81.0" prefWidth="350.0" styleClass="title" text="REGISTRAZIONE" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
