@@ -64,6 +64,10 @@ public class MainAppController implements Initializable {
         switchScene("/main/application/visualizza-password-view.fxml");
     }
 
+    public void scenaSecrityCheck() throws Exception {
+        switchScene("/main/application/security-check-view.fxml");
+    }
+
     public void logOut(ActionEvent event) throws Exception{
         MainApp.loggedUser = 0;
         Parent root = FXMLLoader.load(getClass().getResource("/main/application/login-view.fxml"));

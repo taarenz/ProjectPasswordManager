@@ -1,0 +1,77 @@
+.background {
+    -fx-background-color: linear-gradient(to bottom right, #cedbe3 .05%,#00B6F5 70%, #006fff 100% );
+}
+
+.title {
+    -fx-font-size: 40px;
+    -fx-text-fill: white;
+
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+
+    /*-fx-effect: dropshadow(two-pass-box, #00aef8, 15,0,0.1,3);*/
+}
+
+.text-field {
+    -fx-background-color: transparent;
+    -fx-background-radius: 15px;
+
+    -fx-border-radius: 15px;
+    -fx-border-color: white;
+    -fx-border-width: 5px;
+
+    -fx-prompt-text-fill: white;
+
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+
+    -fx-alignment: center;
+}
+
+.bottone-modifica {
+    /* colore sfondo bottone */
+    -fx-background-color: #0099f8;
+    -fx-background-radius: 20px;
+    /* testo del bottone */
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+}
+
+.bottone-modifica:hover {
+    -fx-background-color: #05c200;
+    -fx-background-radius: 20px;
+    /* testo del bottone */
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-fill: white;
+}
+
+.bottone-modifica:pressed {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #05c200;
+    -fx-border-radius: 20px;
+    -fx-border-color: #05c200;
+    -fx-border-width: 1px;
+
+    -fx-background-radius: 30px;
+    /* testo del bottone */
+    -fx-font-weight: bold;
+}
+
+.anchor-pane-colore-password {
+    -fx-border-width: 5px;
+    -fx-border-color: white;
+    -fx-border-radius: 20px;
+    -fx-background-color: transparent;
+    -fx-background-radius: 20px;
+}
+
+.descizione-esito {
+    -fx-background-color: transparent;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-border-color: white;
+    -fx-alignment: center;
+    -fx-text-fill: white;
+}

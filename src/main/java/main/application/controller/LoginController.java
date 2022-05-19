@@ -106,7 +106,7 @@ public class LoginController implements Initializable {
 
             scene = new Scene(root);
             stage.setScene(scene);
-            stage.setTitle("LOGIN");
+            stage.setTitle("PASS&GER");
             stage.show();
             // print sul terminale
             System.out.println("OK");

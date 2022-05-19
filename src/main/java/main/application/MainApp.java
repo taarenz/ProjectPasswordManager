@@ -15,7 +15,7 @@ public class MainApp extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 390, 341);
         stage.setResizable(false);
-        stage.setTitle("ProjectManager");
+        stage.setTitle("LOGIN");
         stage.setScene(scene);
         stage.show();
     }
