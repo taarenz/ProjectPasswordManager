@@ -15,6 +15,9 @@ import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Controller per la generazione di una password random.
+ */
 public class PopUpGenerazionePSWController implements Initializable {
     // dichiarazione attributi
     @FXML AnchorPane anchorPane;
@@ -23,8 +26,7 @@ public class PopUpGenerazionePSWController implements Initializable {
     @FXML CheckBox lettereNumeriCheckbox;
     @FXML CheckBox caratteriSpecialiCheckbox;
     @FXML CheckBox maiuscoleCheckbox;
-    @FXML Label labelPassword;  // indica dove verrà visualizzata la password generata
-
+    @FXML Label labelPassword;
     @FXML Button confermaAggiunta;
 
     public static String passwordGenerata = "";
@@ -33,7 +35,11 @@ public class PopUpGenerazionePSWController implements Initializable {
     private final String[] alphabet = new String[] {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
     private final String[] symbols = new String[] {"!","#","$","%","&","'","(",")","*","+",",","\"","-",".","/",":",";","<","=",">","?","@","[","\\","]","^","_","`","{","|","}","~"};
 
-    // metodo initialize
+    /**
+     * Inizializzazione della scena.
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         passwordLength = (int) lunghezzaPassword.getValue();
@@ -45,21 +51,31 @@ public class PopUpGenerazionePSWController implements Initializable {
         });
     }
 
-    // funzione al click del bottone genera password
+    /**
+     * Metodo chiamato al click sul bottone per la generazione.
+     * Chiama il metodo per la generazione della password e la mostra all'utente.
+     */
     public void creazionePassword (){
         passwordGenerata = generatePassword();
         labelPassword.setText(passwordGenerata);
         passwordGenerata = "";
     }
 
-    // metodo che setta il testo per le password
+
+    /**
+     * Metodo per confermare la password generata.
+     */
     public void confermaPassword(){
         passwordGenerata = labelPassword.getText();
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         stage.close();
     }
 
-    //metodo per generare password
+
+    /**
+     * Metodo per la generazione effettiva della password.
+     * @return <code>String</code> -> password generata in base ai criteri selezionati dall'utente.
+     */
     public String generatePassword(){
         String[] array = new String[passwordLength];
 
@@ -114,17 +130,29 @@ public class PopUpGenerazionePSWController implements Initializable {
             }
         }
 
-        System.out.println("Password generata: "+arrayConvert(array));
+        //TODO remove debug
+        System.out.println("Password generata: " + arrayConvert(array));
 
         return arrayConvert(array);
     }
 
     //metodi e variabili ausiliari per generatePassword()
+    /**
+     * Metodo ausiliario per la generazione di un valore random in un range di valori.
+     * @param max -> Tipo: <code>int</code> (valore massimo del range da generare).
+     * @param min -> Tipo: <code>int</code> (valore minimo del range da generare).
+     * @return numero intero generato.
+     */
     private int randomNumber(int max, int min){
         int range = max - min + 1;
         return  (int)(Math.random() * range) + min;
     }
 
+    /**
+     * Metodo ausiliario per la conversione di un array di stringhe in stringa.
+     * @param array -> Tipo <code>String[]</code> (array di String da convertire in String).
+     * @return array convertito in stringa.
+     */
     private String arrayConvert(String[] array){
         StringBuilder finalPsw = new StringBuilder();
         for (String character: array) {

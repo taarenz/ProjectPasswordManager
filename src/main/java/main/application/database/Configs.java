@@ -1,5 +1,8 @@
 package main.application.database;
 
+/**
+ * Classe gestire le proprietà del database.
+ */
 public class Configs {
 
 	protected static String dbHost = "remotemysql.com";

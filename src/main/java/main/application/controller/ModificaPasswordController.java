@@ -8,75 +8,77 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import main.application.MainApp;
 import main.application.database.DBHandler;
 import main.application.model.Credenziali;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * Controller per la modifica e l'eliminazione di credenziali esistenti.
+ */
 public class ModificaPasswordController implements Initializable {
     // dichiarazione degli oggetti di scena
     @FXML Parent root;
     @FXML ChoiceBox<Credenziali> choiceBoxSitoDaModificare;
-    @FXML CheckBox checkBoxConferma;  // obbligatoria se si vuole modificare o eliminare una password
+    @FXML CheckBox checkBoxConferma;
     @FXML PasswordField passwordFieldNuovaPasswordUno;
     @FXML PasswordField passwordFieldNuovaPasswordDue;
     @FXML Button bottoneModifica;
     @FXML Button bottoneElimina;
 
-    // variabile statica per la password generata casualmente
-
+    /**
+     * Inizializzazione della scena.
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         choiceBoxSitoDaModificare.setItems(MainAppController.listaCredenzialiUtente);
     }
 
-    // conferma bottone modifica
+    /**
+     * Metodo per confermare la modifica della password.
+     * Aggiornamento della password nel database.
+     * SQLException gestita dal metodo.
+     */
     public void confermaBottoneModifica(){
         // verifica che tutti i campi siano stati usati
         if(checkCampi()){
-            // controllo che le password siano corrette
-
             // controllo che le password nuove siano uguali
             if(passwordFieldNuovaPasswordUno.getText().equals(passwordFieldNuovaPasswordDue.getText())){
                 // cambio della password
                 int indice = getIndiceOggetto(choiceBoxSitoDaModificare.getValue());
-                //TODO scrivere la nuova password sul database
                 int previousCredentialUserID = MainAppController.listaCredenzialiUtente.get(indice).getUser_id();
                 String previousCredentialWebsite = MainAppController.listaCredenzialiUtente.get(indice).getUrlSitoWeb();
                 String previousCredentiaUsername = MainAppController.listaCredenzialiUtente.get(indice).getNomeUtente();
                 String previousCredentialPassword = MainAppController.listaCredenzialiUtente.get(indice).getPassword();
 
-
-                MainAppController.listaCredenzialiUtente.get(indice).cambioPassword(passwordFieldNuovaPasswordUno.getText());
+                MainAppController.listaCredenzialiUtente.get(indice).setPassword(passwordFieldNuovaPasswordUno.getText());
                 Credenziali temp = MainAppController.listaCredenzialiUtente.get(indice);
 
                 Connection connection = DBHandler.getConnection();
-
-                String tempUsername;
-                tempUsername = previousCredentiaUsername;
 
                 try {
                     String query = "UPDATE passwords SET password = ? WHERE user_id = ? AND website = ? AND username = ? AND password = ?";
                     PreparedStatement s = connection.prepareStatement(query);
                     s.setString(1, temp.getPassword());
-                    //TODO: password hash
                     s.setInt(2, previousCredentialUserID);
                     s.setString(3, previousCredentialWebsite);
                     s.setString(4, previousCredentiaUsername);
                     s.setString(5, previousCredentialPassword);
                     System.out.println(s);
                     int rs = s.executeUpdate();
+                    //TODO remove debug
                     if (rs==1) {
                         System.out.println("Password updated");
                     }
                 } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    DBHandler.queryException();
                 }
 
                 choiceBoxSitoDaModificare.setItems(MainAppController.listaCredenzialiUtente);
@@ -92,18 +94,25 @@ public class ModificaPasswordController implements Initializable {
                 alert.setHeaderText("Password errate");
                 alert.setContentText("Le password non corrispondono");
 
-                   alert.showAndWait();
+                alert.showAndWait();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Errore");
             alert.setHeaderText("Campi non corretti");
             alert.setContentText("Per poter modificare la password occorre selezionare il checkbox ed inserire la nuova password");
+
             alert.showAndWait();
         }
 
     }
 
+
+    /**
+     * Metodo per confermare l'eliminazione della password.
+     * Eliminazione della password dal database.
+     * SQLException gestita dal metodo.
+     */
     public void confermaBottoneElimina(){
         // verifica che la choice box non sia vuota
         if(!choiceBoxSitoDaModificare.getSelectionModel().isEmpty() && checkBoxConferma.isSelected()) {
@@ -131,7 +140,7 @@ public class ModificaPasswordController implements Initializable {
                             System.out.println("Password deleted");
                         }
                     } catch (SQLException e) {
-                        e.printStackTrace();
+                        DBHandler.queryException();
                     }
 
                     MainAppController.listaCredenzialiUtente.remove(credenzialiElimate);
@@ -156,10 +165,13 @@ public class ModificaPasswordController implements Initializable {
 
             alert.showAndWait();
         }
-
     }
 
-    // metodo per verificare che tutti i campo
+
+    /**
+     * Metodo che controlla che i campi siano stati compilati correttamente.
+     * @return true se tutti i campi sono compilati correttamente; false altrimenti.
+     */
     private boolean checkCampi(){
         if(!checkBoxConferma.isSelected()){
             return false;
@@ -177,27 +189,34 @@ public class ModificaPasswordController implements Initializable {
         return true;
     }
 
-    // metodo per prendere l'indice dell'oggetto
-    private int getIndiceOggetto(Credenziali temp){
+
+    /**
+     * Metodo per ottenere la posizione dell'oggetto nella lista globale delle credenziali.
+     * @param c -> Tipo: <code>Credenziali</code> (credenziale da controllare).
+     * @return posizione dell'oggetto <code>c</code> nella lista se esiste; <code>-1</code> altrimenti.
+     */
+    private int getIndiceOggetto(Credenziali c){
         for(int i=0; i<MainAppController.listaCredenzialiUtente.size(); i++){
-            if(MainAppController.listaCredenzialiUtente.get(i).equals(temp)){
+            if(MainAppController.listaCredenzialiUtente.get(i).equals(c)){
                 return i;
             }
         }
-
         return -1;
     }
 
-    // metodo per aprire il popup
-    public void aperturaPopupGenerazionePassword() throws Exception{
+    /**
+     * Metodo che apre il popup per la generazione delle password.
+     * @throws IOException quando il popup non si apre.
+     */
+    public void aperturaPopupGenerazionePassword() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/application/popup-generazione-psw.fxml"));
         root = loader.load();
         Scene newScene = new Scene(root);
 
         Stage inputStage = new Stage();
         inputStage.setScene(newScene);
-        inputStage.setTitle("Generazione Password");
         inputStage.setResizable(false);
+        inputStage.setTitle("Generazione Password");
         inputStage.initModality(Modality.APPLICATION_MODAL);
         inputStage.showAndWait();
 

@@ -1,10 +1,8 @@
 package main.application.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -15,15 +13,14 @@ import main.application.database.DBHandler;
 import main.application.model.Credenziali;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
-public class NuovaPasswordController implements Initializable {
+/**
+ * Controller per la gestione dell'aggiunta di una nuova password.
+ */
+public class NuovaPasswordController {
     // dichiarazione variabili
     Parent root;
     // dichiarazione delle variabili di scena
@@ -33,11 +30,16 @@ public class NuovaPasswordController implements Initializable {
     @FXML PasswordField passwordFieldDue;
     @FXML Button bottoneConfermaInserimento;
     @FXML Button generaPassword;
-    // initialize per aggiungere listener allo slider
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-    }
 
-    // metodo per confermare l'aggiunta della nuova password
+//    // initialize per aggiungere listener allo slider
+//    public void initialize(URL url, ResourceBundle resourceBundle) {
+//    }
+
+    /**
+     * Metodo per confermare l'aggiunta della nuova password.
+     * Scrittura della nuova password nel database.
+     * SQLException gestita dal metodo.
+     */
     public void confermaNuovaPassword(){
         // controllo che tutti i campi obbligatori siano stati compilati
         if(fieldCheck()){
@@ -59,21 +61,19 @@ public class NuovaPasswordController implements Initializable {
                         String query = "INSERT INTO passwords (website, username, password, user_id, created_at)"+"values (?, ?, ?, ?, ?)";
                         PreparedStatement s = connection.prepareStatement(query);
                         s.setString(1, temp.getUrlSitoWeb());
-                        //TODO: password hash
                         s.setString(2, temp.getNomeUtente());
                         s.setString(3, temp.getPassword());
                         s.setInt(4, temp.getUser_id());
                         s.setTimestamp(5, new java.sql.Timestamp(new java.util.Date().getTime()));
 
                         int rs = s.executeUpdate();
+                        //TODO: remove debug
                         if (rs==1) {
                             System.out.println("Password added");
                         }
                     } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        DBHandler.queryException();
                     }
-//
 
                     // password non già inserita
                     MainAppController.listaCredenzialiUtente.add(temp);
@@ -92,6 +92,7 @@ public class NuovaPasswordController implements Initializable {
                     alert.showAndWait();
                 }
 
+                //TODO: remove debug
                 for(Credenziali c : MainAppController.listaCredenzialiUtente){
                     System.out.println(c);
                 }
@@ -115,16 +116,22 @@ public class NuovaPasswordController implements Initializable {
         }
     }
 
-    // metodo per verificare che una variabile sia presente o meno all'interno della lista
+    /**
+     * Controlla che la credenziale inserita sia presente o meno all'interno della lista.
+     * @param c -> Tipo: <code>Credenziali</code> (credenziale da controllare).
+     * @return true se la <code>c</code> e' stata trovata; false altrimenti.
+     */
     public boolean credenzialePresente(Credenziali c){
         for(Credenziali credenziali : MainAppController.listaCredenzialiUtente){
             if(c.equals(credenziali)) return true;
         }
-
         return false;
     }
 
-    // metodo che controlla che i campi sitoUrl e password siano stati compilati correttamente
+    /**
+     * Metodo che controlla che i campi sitoUrl e password siano stati compilati correttamente.
+     * @return true se tutti i campi sono compilati correttamente; false altrimenti.
+     */
     private boolean fieldCheck(){
         if(textFieldUrlSito.getText().equals("")){
             return false;
@@ -132,15 +139,15 @@ public class NuovaPasswordController implements Initializable {
         if(passwordFieldUno.getText().equals("")){
             return false;
         }
-        if(passwordFieldDue.getText().equals("")){
-            return false;
-        }
-
-        return true;
+        return !passwordFieldDue.getText().equals("");
     }
 
-    // metodo che apre il popup per la generazione delle password
-    public void aperturaPopupGenerazionePassword() throws Exception{
+
+    /**
+     * Metodo che apre il popup per la generazione delle password.
+     * @throws IOException quando il popup non si apre.
+     */
+    public void aperturaPopupGenerazionePassword() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/application/popup-generazione-psw.fxml"));
         root = loader.load();
         Scene newScene = new Scene(root);
@@ -156,7 +163,6 @@ public class NuovaPasswordController implements Initializable {
             passwordFieldUno.setText(PopUpGenerazionePSWController.passwordGenerata);
             passwordFieldDue.setText(PopUpGenerazionePSWController.passwordGenerata);
         }
-
         PopUpGenerazionePSWController.passwordGenerata = "";
     }
 
