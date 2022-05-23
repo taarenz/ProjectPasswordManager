@@ -9,7 +9,18 @@ import java.io.IOException;
 
 public class MainApp extends Application {
 
+    /**
+     * Utente loggato durante l'esecuzione.
+     * Variabile globale modificata al login e al logout dell'utente.
+     * 0 -> Nessun utente loggato.
+     * !=0 -> Utente loggato. Il valore corrisponde alla colonna <code>id</code> nella tabella <code>users</code> del database.
+     */
     public static int loggedUser=0;
+
+    /**
+     * @param stage The primary stage for this application, onto which the application scene can be set.
+     * @throws IOException quando la scena non carica.
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("login-view.fxml"));
@@ -20,15 +31,11 @@ public class MainApp extends Application {
         stage.show();
     }
 
+    /**
+     * Metodo main -> chiama metodo launch().
+     * @param args ...
+     */
     public static void main(String[] args) {
         launch();
     }
-
-//    public int getLoggedUser(){
-//        return loggedUser;
-//    }
-//
-//    public void setLoggedUser(int loggedUser){
-//        this.loggedUser = loggedUser;
-//    }
 }

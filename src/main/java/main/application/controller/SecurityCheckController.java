@@ -1,38 +1,25 @@
 package main.application.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import main.application.database.DBHandler;
 import main.application.model.Credenziali;
 
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
-
-public class SecurityCheckController implements Initializable {
+/**
+ * Controller per la funzionalita' Security Check
+ */
+public class SecurityCheckController{
     // dichiarazione degli oggetti di scena
-    @FXML Parent root;
     @FXML TextField passwordToCheck;
     @FXML AnchorPane resultPane;
     @FXML Label resultSummary;
     @FXML Label resultText;
     @FXML Button check;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        resultSummary.setText("");
-    }
 
-    // password check
+    /**
+     * Metodo per gestire il controllo della password inserita e mostrare il risultato.
+     */
     public void checkPassword(){
         if(passwordToCheck.getText().length()==0){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -42,7 +29,7 @@ public class SecurityCheckController implements Initializable {
         }else{
             int result = Credenziali.singlePasswordCheck(passwordToCheck.getText());
             if (result==0){
-                resultPane.setStyle("-fx-background-color:" + "#7a1414");
+                resultPane.setStyle("-fx-background-color:" + "brown");
                 resultSummary.setText("ALTAMENTE CRITICA");
                 resultText.setText("Cambia immediatamente questa password. Ci vogliono pochi secondi per trovarla");
             }else if (result<10){

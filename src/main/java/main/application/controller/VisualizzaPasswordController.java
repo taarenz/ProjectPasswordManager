@@ -3,7 +3,6 @@ package main.application.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -19,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controller per gestire la visualizzazione delle password.
+ */
 public class VisualizzaPasswordController implements Initializable {
     Credenziali credenziali = null;
     // dichiarazione oggetti di scena
@@ -26,12 +28,16 @@ public class VisualizzaPasswordController implements Initializable {
     @FXML TableColumn colonnaSitoWeb = new TableColumn<Credenziali, String>("");
     @FXML TableColumn colonnaNomeUtente = new TableColumn<Credenziali, String>("");
     @FXML TableColumn colonnaPassword = new TableColumn<Credenziali, String>("");
-
     @FXML TextField searchBar;
     @FXML Button bottoneCancellaSearchBar;
     @FXML HBox containerSearchBar;
 
-    // metodo initialize
+
+    /**
+     * Inizializzazione della scena.
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tableViewCredenziali.setItems(MainAppController.listaCredenzialiUtente);
@@ -47,6 +53,9 @@ public class VisualizzaPasswordController implements Initializable {
                 tableViewCredenziali.setItems(filterList(MainAppController.listaCredenzialiUtente, newValue))
         );
     }
+
+
+    //TODO: commentare i seguenti metodi (?)
 
     // metodo per vedere se la search bar contiene i match
     private boolean searchFindsMatch(Credenziali credenziali, String searchText){
@@ -69,6 +78,9 @@ public class VisualizzaPasswordController implements Initializable {
         return FXCollections.observableList(filteredList);
     }
 
+    /**
+     * Metodo per rimuovere il termine di ricerca dalla search bar.
+     */
     public void clearSearchBar(){
         searchBar.clear();
     }

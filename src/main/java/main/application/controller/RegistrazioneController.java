@@ -16,6 +16,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Controller per la registrazione di un nuovo utente.
+ */
 public class RegistrazioneController {
     // dichiarazione elementi di scena
     @FXML AnchorPane anchorPane;
@@ -24,18 +27,22 @@ public class RegistrazioneController {
     @FXML PasswordField passwordFieldConferma;
     @FXML Button bottoneConferma;
 
-    // azione della registrazione
+    /**
+     * Metodo per gestire la registrazione dell'utente.
+     * Creazione dell'utente nel database.
+     * SQLException gestita dal metodo.
+     */
     public void confermaRegistrazione() {
         // controllo che tutti i campi siano compilati
         if(campiCheck()){
-            // creazione dell'utente
+
             Utente u = new Utente(textFieldNomeUtente.getText(), passwordFieldPassword.getText());
             Connection connection = DBHandler.getConnection();
+
             try {
                 String query = "INSERT INTO users (username, password)"+"values (?, ?)";
                 PreparedStatement s = connection.prepareStatement(query);
                 s.setString(1, u.getNomeUtente());
-                //TODO: password hash
                 s.setString(2, u.getPassword());
 
                 int rs = s.executeUpdate();
@@ -44,12 +51,11 @@ public class RegistrazioneController {
                 }
 
             } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                DBHandler.queryException();
             }
-
             Stage stage = (Stage) anchorPane.getScene().getWindow();
             stage.close();
+
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Errore");
@@ -60,6 +66,10 @@ public class RegistrazioneController {
         }
     }
 
+    /**
+     * Metodo che controlla che i campi sitoUrl e password siano stati compilati correttamente.
+     * @return true se tutti i campi sono compilati correttamente; false altrimenti.
+     */
     private boolean campiCheck() {
         if(textFieldNomeUtente.getText().equals("")){
             return false;
@@ -72,10 +82,6 @@ public class RegistrazioneController {
         }
 
         // controllo che le due password siano ugali
-        if(!passwordFieldPassword.getText().equals(passwordFieldConferma.getText())){
-            return false;
-        }
-
-        return true;
+        return passwordFieldPassword.getText().equals(passwordFieldConferma.getText());
     }
 }

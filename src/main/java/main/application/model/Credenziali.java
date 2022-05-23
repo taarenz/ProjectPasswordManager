@@ -1,11 +1,12 @@
 package main.application.model;
 
-import main.application.controller.MainAppController;
-
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Credenziali model
+ */
 public class Credenziali{
     // attributi
     private String nomeUtente;
@@ -14,9 +15,12 @@ public class Credenziali{
     private boolean hasNomeUtente;
     private int user_id;
 
-    private int id;
-
-    // costruttore
+    /**
+     * Costruttore senza username.
+     * @param password -> Tipo: <code>String</code> (nuova password).
+     * @param urlSitoWeb -> Tipo: <code>String</code> (nome/url del sito/app).
+     * @param user_id -> Tipo: <code>int</code> (id univoco dell'utente loggato).
+     */
     public Credenziali(String password, String urlSitoWeb, int user_id) {
         this.nomeUtente = null;
         this.password = password;
@@ -25,6 +29,13 @@ public class Credenziali{
         this.user_id = user_id;
     }
 
+    /**
+     * Costruttore con username.
+     * @param nomeUtente -> Tipo: <code>String</code> (username/email).
+     * @param password -> Tipo: <code>String</code> (nuova password).
+     * @param urlSitoWeb -> Tipo: <code>String</code> (nome/url del sito/app).
+     * @param user_id -> Tipo: <code>int</code> (id univoco dell'utente loggato).
+     */
     public Credenziali(String nomeUtente, String password, String urlSitoWeb, int user_id) {
         this.nomeUtente = nomeUtente;
         this.password = password;
@@ -34,41 +45,80 @@ public class Credenziali{
     }
 
     // metodi getter e setter
+
+    /**
+     * Getter: nome utente della credenziale.
+     * @return nome utente.
+     */
     public String getNomeUtente() {
         return nomeUtente;
     }
+
+    /**
+     * Setter: nome utente della credenziale.
+     * @param nomeUtente -> Tipo <code>String</code> (username/email).
+     */
     public void setNomeUtente(String nomeUtente) {
         this.nomeUtente = nomeUtente;
     }
+
+    /**
+     * Getter: password della credenziale.
+     * @return password.
+     */
     public String getPassword() {
         return password;
     }
+
+    /**
+     * Setter: password della credenziale.
+     * @param password -> Tipo <code>String</code> (password).
+     */
     public void setPassword(String password) {
         this.password = password;
     }
+
+    /**
+     * Getter: sito web della credenziale.
+     * @return sito web.
+     */
     public String getUrlSitoWeb() {
         return urlSitoWeb;
     }
+
+    /**
+     * Setter: sito web della credenziale.
+     * @param urlSitoWeb -> Tipo <code>String</code> (nome/url del sito/app).
+     */
     public void setUrlSitoWeb(String urlSitoWeb) {
         this.urlSitoWeb = urlSitoWeb;
     }
 
+
+    /**
+     * Getter: id dell'utente "proprietario" della credenziale.
+     * @return user id.
+     */
     public int getUser_id(){return user_id;}
 
-    // metodo per modificare la password
-    public void cambioPassword(String password){
-        this.password = password;
-    }
 
-    // metodo equals
-    public boolean equals(Credenziali o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Credenziali that = (Credenziali) o;
+    /**
+     * Metodo equals. Controlla se due credenziali sono identiche.
+     * @param c -> Tipo: <code>Credenziali</code> (credenziale da controllare).
+     * @return true se le credenziali sono uguali; false altrimenti.
+     */
+    public boolean equals(Credenziali c) {
+        if (this == c) return true;
+        if (c == null || getClass() != c.getClass()) return false;
+        Credenziali that = (Credenziali) c;
         return Objects.equals(nomeUtente, that.nomeUtente) && Objects.equals(password, that.password) && Objects.equals(urlSitoWeb, that.urlSitoWeb);
     }
 
-    // metodo toString
+
+    /**
+     * Metodo toString. Converte l'oggetto di tipo <code>Credenziali</code> in <code>String</code>.
+     * @return credenziale convertita in stringa.
+     */
     public String toString(){
         if(this.hasNomeUtente)
             return "Sito: " + this.urlSitoWeb+ " - User: "+this.nomeUtente+" - Password: "+password;
@@ -76,7 +126,12 @@ public class Credenziali{
             return "Sito: " + this.urlSitoWeb+" - Password: "+password;
     }
 
-    //Password security check
+
+    /**
+     * Metodo per controllare l'efficacia di una password.
+     * @param toCheck -> Tipo <code>String</code> (password da controllare).
+     * @return punteggio ottenuto dalla password controllata.
+     */
     public static int singlePasswordCheck(String toCheck){
         int tempScore = toCheck.length();
 
@@ -138,6 +193,7 @@ public class Credenziali{
             tempScore-=2;
         }
 
+        //TODO: remove?
 //        boolean samePassword = false;
 //
 //        for (Credenziali credenziale:

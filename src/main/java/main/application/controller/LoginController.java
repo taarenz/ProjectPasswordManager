@@ -3,7 +3,6 @@ package main.application.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,17 +15,12 @@ import main.application.model.Credenziali;
 import main.application.model.Utente;
 
 import java.io.*;
-import java.math.BigInteger;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
 import java.sql.*;
-import java.util.ResourceBundle;
 
-public class LoginController implements Initializable {
+/**
+ * Controller per operazioni di login.
+ */
+public class LoginController{
     // dichiarazione oggetti di scena
     private Stage stage;
     private Scene scene;
@@ -35,30 +29,23 @@ public class LoginController implements Initializable {
     public Utente utenteSalvato;
 
     // dichiarazione dei componenti di Scena
-    @FXML
-    TextField textFieldNomeUtente;
-    @FXML
-    PasswordField textFieldPassword;
-    @FXML
-    Button loginButton;
-    @FXML
-    Button registratiButton;
+    @FXML TextField textFieldNomeUtente;
+    @FXML PasswordField textFieldPassword;
+    @FXML Button loginButton;
+    @FXML Button registratiButton;
 
-    public LoginController() throws NoSuchAlgorithmException, NoSuchProviderException {
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-    }
-
-    public void loginAction(ActionEvent event) throws Exception {
-
-        //TODO eliminare controllo su file in favore del DB
+    /**
+     * Metodo per il login e l'aggiunta delle password dell'utente loggato nell'Observable list globale.
+     * @param event click del mouse.
+     * @throws IOException quando la scena non si carica.
+     * SQLException gestita dal metodo.
+     */
+    public void loginAction(ActionEvent event) throws IOException {
         //connessione con il db
         Connection connection = DBHandler.getConnection();
         boolean loginSuccess = false;
-//          System.out.print(connection);
         Utente u = new Utente(textFieldNomeUtente.getText(), textFieldPassword.getText());
+
         try {
             String query = "SELECT * FROM users WHERE username = ?";
             PreparedStatement s = connection.prepareStatement(query);
@@ -68,21 +55,20 @@ public class LoginController implements Initializable {
             while (rs.next()) {
                 if(rs.getString("password").equals(u.getPassword())){
                     loginSuccess = true;
-                    //TODO: check password hash
                     MainApp.loggedUser = rs.getInt("id");
                 }
             }
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            DBHandler.queryException();
         }
+
         if(loginSuccess) {
             // caricamento della nuova scena
             root = FXMLLoader.load(getClass().getResource("/main/application/main-view.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            //Get all user passwords from db
+            //Ottenere tutte le password dell'utente loggato dal db
             try {
                 String query = "SELECT * FROM passwords WHERE user_id = ?";
                 PreparedStatement s = connection.prepareStatement(query);
@@ -100,15 +86,14 @@ public class LoginController implements Initializable {
                 }
 
             } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                DBHandler.queryException();
             }
 
             scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("PASS&GER");
             stage.show();
-            // print sul terminale
+            //TODO: remove debug
             System.out.println("OK");
         } else {
             // visualizzazione del popup
@@ -117,12 +102,16 @@ public class LoginController implements Initializable {
             alert.setHeaderText("Login errato");
             alert.setContentText("Nome utente e/o password errate");
             alert.showAndWait();
-            // print sul terminale
+            //TODO: remove debug
             System.out.println("LOGIN FAILURE");
         }
     }
 
-    public void switchregistratiView() throws Exception{
+    /**
+     * Metodo per passare dalla schermata di login a quella di registrazione.
+     * @throws IOException quando la scena non carica.
+     */
+    public void switchregistratiView() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/application/register-view.fxml"));
         root = loader.load();
         Scene newScene = new Scene(root);
@@ -136,45 +125,45 @@ public class LoginController implements Initializable {
     }
 
 
-    private static String get_SHA_256_SecurePassword(String passwordToHash,
-                                                     String salt) {
-        String generatedPassword = null;
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(salt.getBytes());
-            byte[] bytes = md.digest(passwordToHash.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < bytes.length; i++) {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16)
-                        .substring(1));
-            }
-            generatedPassword = sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return generatedPassword;
-    }
-
-    String passwordToHash = "password";
-    String salt = getSalt();
-
-    String securePassword = get_SHA_256_SecurePassword(passwordToHash, salt);
-//    System.out.print(securePassword);
-
-    private static String getSalt()
-            throws NoSuchAlgorithmException, NoSuchProviderException
-    {
-        // Always use a SecureRandom generator
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
-
-        // Create array for salt
-        byte[] salt = new byte[16];
-
-        // Get a random salt
-        sr.nextBytes(salt);
-
-        // return salt
-        return salt.toString();
-    }
+//    private static String get_SHA_256_SecurePassword(String passwordToHash,
+//                                                     String salt) {
+//        String generatedPassword = null;
+//        try {
+//            MessageDigest md = MessageDigest.getInstance("SHA-256");
+//            md.update(salt.getBytes());
+//            byte[] bytes = md.digest(passwordToHash.getBytes());
+//            StringBuilder sb = new StringBuilder();
+//            for (int i = 0; i < bytes.length; i++) {
+//                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16)
+//                        .substring(1));
+//            }
+//            generatedPassword = sb.toString();
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
+//        return generatedPassword;
+//    }
+//
+//    String passwordToHash = "password";
+//    String salt = getSalt();
+//
+//    String securePassword = get_SHA_256_SecurePassword(passwordToHash, salt);
+////    System.out.print(securePassword);
+//
+//    private static String getSalt()
+//            throws NoSuchAlgorithmException, NoSuchProviderException
+//    {
+//        // Always use a SecureRandom generator
+//        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
+//
+//        // Create array for salt
+//        byte[] salt = new byte[16];
+//
+//        // Get a random salt
+//        sr.nextBytes(salt);
+//
+//        // return salt
+//        return salt.toString();
+//    }
 
 }
