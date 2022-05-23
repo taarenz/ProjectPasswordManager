@@ -99,6 +99,10 @@ public class MainAppController implements Initializable {
         switchScene("/main/application/security-check-view.fxml");
     }
 
+    public void scenaAbout() {
+        switchScene("/main/application/about-view.fxml");
+    }
+
     /**
      * Metodo per la gestione del logout dell'utente.
      */
