@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="main.application.AboutView"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="533.0" prefWidth="870.0" styleClass="background" stylesheets="@css/style-about-view.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.application.controller.AboutController">
+   <children>
+      <Label layoutY="8.0" prefHeight="17.0" prefWidth="431.0" style="-fx-alignment: CENTER; -fx-text-fill: white; -fx-effect: dropshadow(two-pass-box, #00aef8, 15,0,0.1,3);" text="ABOUT YOUR PASS&amp;GER" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <PieChart fx:id="graficoPassword" layoutX="185.0" layoutY="94.0" title="PASSWORD" />
+   </children>
 </AnchorPane>

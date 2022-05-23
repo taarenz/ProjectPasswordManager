@@ -68,6 +68,10 @@ public class MainAppController implements Initializable {
         switchScene("/main/application/security-check-view.fxml");
     }
 
+    public void scenaAbout() throws Exception{
+        switchScene("/main/application/about-view.fxml");
+    }
+
     public void logOut(ActionEvent event) throws Exception{
         MainApp.loggedUser = 0;
         Parent root = FXMLLoader.load(getClass().getResource("/main/application/login-view.fxml"));

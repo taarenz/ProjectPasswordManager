@@ -29,6 +29,7 @@ public class SecurityCheckController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        resultSummary.setText("");
     }
 
     // password check
@@ -41,7 +42,7 @@ public class SecurityCheckController implements Initializable {
         }else{
             int result = Credenziali.singlePasswordCheck(passwordToCheck.getText());
             if (result==0){
-                resultPane.setStyle("-fx-background-color:" + "brown");
+                resultPane.setStyle("-fx-background-color:" + "#7a1414");
                 resultSummary.setText("ALTAMENTE CRITICA");
                 resultText.setText("Cambia immediatamente questa password. Ci vogliono pochi secondi per trovarla");
             }else if (result<10){

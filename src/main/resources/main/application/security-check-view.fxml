@@ -14,9 +14,9 @@
          </font></Label>
       <TextField fx:id="passwordToCheck" layoutX="201.0" layoutY="152.0" prefHeight="40.0" prefWidth="279.0" promptText="password da verificare" />
       <Button fx:id="check" layoutX="290.0" layoutY="208.0" mnemonicParsing="false" onAction="#checkPassword" prefHeight="40.0" prefWidth="103.0" styleClass="bottone-modifica" text="ANALIZZA" />
-      <AnchorPane fx:id="resultPane" layoutX="273.0" layoutY="337.0" prefHeight="40.0" prefWidth="138.0" style="-fx-background-color: brown;" styleClass="anchor-pane-colore-password">
+      <AnchorPane fx:id="resultPane" layoutX="244.0" layoutY="335.0" prefHeight="39.0" prefWidth="193.0" style="-fx-background-color: brown;" styleClass="anchor-pane-colore-password">
          <children>
-            <Label fx:id="resultSummary" layoutX="55.0" layoutY="12.0" text="Label" textFill="WHITE" wrapText="true" />
+            <Label fx:id="resultSummary" alignment="CENTER" layoutX="12.0" layoutY="12.0" prefHeight="17.0" prefWidth="167.0" textFill="WHITE" wrapText="true" />
          </children></AnchorPane>
       <Label fx:id="resultText" layoutX="92.0" layoutY="386.0" prefHeight="21.0" prefWidth="500.0" styleClass="descizione-esito" text="DESCRIZIONE ESITO" />
    </children>

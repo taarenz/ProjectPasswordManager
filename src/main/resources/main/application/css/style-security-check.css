@@ -60,6 +60,7 @@
 }
 
 .anchor-pane-colore-password {
+    -fx-alignment: center;
     -fx-border-width: 5px;
     -fx-border-color: white;
     -fx-border-radius: 20px;

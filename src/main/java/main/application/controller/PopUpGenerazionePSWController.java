@@ -87,7 +87,6 @@ public class PopUpGenerazionePSWController implements Initializable {
                 }
             }
         }else if (!caratteriSpecialiCheckbox.isSelected() && maiuscoleCheckbox.isSelected()){
-
             for(int i=0; i<array.length; i++){
                 int varType = randomNumber(900,0);
                 if(varType>=0 && varType<300){
