@@ -1,5 +1,9 @@
 package main.application.controller;
 
+<<<<<<< HEAD
+=======
+import javafx.beans.Observable;
+>>>>>>> origin/master
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,6 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AboutController implements Initializable {
+<<<<<<< HEAD
     // dichiarazione delle variabili di scena
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -45,5 +50,39 @@ public class AboutController implements Initializable {
         );
 
         PieChart graficoPassword = new PieChart(pieChartData);
+=======
+    @FXML
+    PieChart pieChart;
+
+    // dichiarazione del numero di password
+    private int passwordCritiche=0;
+    private int passwordMoltoCritiche=0;
+    private int passwordPocoSicure=0;
+    private int passwordSicure=0;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // analisi delle password
+        for(Credenziali c: MainAppController.listaCredenzialiUtente){
+            if(Credenziali.singlePasswordCheck(c.getPassword()) == 0){
+                passwordMoltoCritiche++;
+            } else if(Credenziali.singlePasswordCheck(c.getPassword())<10){
+                passwordCritiche++;
+            } else if(Credenziali.singlePasswordCheck(c.getPassword())<18) {
+                passwordPocoSicure++;
+            } else if(Credenziali.singlePasswordCheck(c.getPassword())>=18) {
+                passwordSicure++;
+            }
+        }
+
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+                new PieChart.Data("Molto Critiche",passwordMoltoCritiche),
+                new PieChart.Data("Critiche",passwordCritiche),
+                new PieChart.Data("Poco Sicure",passwordPocoSicure),
+                new PieChart.Data("Sicure",passwordSicure)
+        );
+
+        pieChart.getData().addAll(pieChartData);
+>>>>>>> origin/master
     }
 }
