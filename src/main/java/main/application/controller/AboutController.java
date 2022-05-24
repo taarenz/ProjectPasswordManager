@@ -1,9 +1,5 @@
 package main.application.controller;
-
-<<<<<<< HEAD
-=======
 import javafx.beans.Observable;
->>>>>>> origin/master
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,42 +11,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AboutController implements Initializable {
-<<<<<<< HEAD
-    // dichiarazione delle variabili di scena
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // dichiarazione delle variabili per contare i vari tipi di password
-        int pswSicure = 0;
-        int pswPocoSicure = 0;
-        int pswCritiche = 0;
-        int pswMoltoCritiche = 0;
 
-        for(Credenziali c : MainAppController.listaCredenzialiUtente){
-            if(Credenziali.singlePasswordCheck(c.getPassword()) == 0){
-                pswMoltoCritiche++;
-            } else if(Credenziali.singlePasswordCheck(c.getPassword()) < 10 ){
-                pswCritiche++;
-            } else if (Credenziali.singlePasswordCheck(c.getPassword()) < 18 ){
-                pswPocoSicure++;
-            } else if(Credenziali.singlePasswordCheck(c.getPassword()) < 20 ){
-                pswSicure++;
-            }
-        }
-
-        System.out.println(pswSicure);
-        System.out.println(pswPocoSicure);
-        System.out.println(pswCritiche);
-        System.out.println(pswMoltoCritiche);
-
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("Sicure", pswSicure),
-                new PieChart.Data("Poco sicure"  , pswPocoSicure),
-                new PieChart.Data("Critiche" , pswCritiche),
-                new PieChart.Data("Molto critiche" , pswMoltoCritiche)
-        );
-
-        PieChart graficoPassword = new PieChart(pieChartData);
-=======
     @FXML
     PieChart pieChart;
 
@@ -83,6 +44,6 @@ public class AboutController implements Initializable {
         );
 
         pieChart.getData().addAll(pieChartData);
->>>>>>> origin/master
     }
 }
+
